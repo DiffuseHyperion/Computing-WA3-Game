@@ -1,4 +1,4 @@
-﻿using PlayerScripts;
+﻿using PlayerScripts.PlayerActions;
 using UnityEngine;
 
 namespace BuildableObjects.LinkPorts

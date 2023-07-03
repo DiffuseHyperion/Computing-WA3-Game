@@ -1,4 +1,4 @@
-﻿using PlayerScripts;
+﻿using PlayerScripts.PlayerActions;
 using UnityEngine;
 
 namespace BuildableObjects.LinkPorts
@@ -24,7 +24,7 @@ namespace BuildableObjects.LinkPorts
             {
                 if (!playerLinking.IsLinking())
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = LinkingColour;
+                    gameObject.GetComponent<SpriteRenderer>().color = GetLinkingColour();
                     playerLinking.StartLink(this);
                 } else if (playerLinking.GetLinkInput() == this)
                 {

@@ -1,7 +1,9 @@
 ﻿using BuildableObjects;
+using MechanicScripts;
+using PlayerScripts.PlayerBuildMenu;
 using UnityEngine;
 
-namespace PlayerScripts
+namespace PlayerScripts.PlayerActions
 {
     public class PlayerBuilding : MonoBehaviour
     {
@@ -12,6 +14,7 @@ namespace PlayerScripts
         private BuildableObject _placementBuildableObject;
         private Player _player;
         private bool _building;
+        private bool _progressing;
         private int _delay;
 
         private void Start()
@@ -42,22 +45,7 @@ namespace PlayerScripts
             if (_placementBuildableObject.CanBuild()) {
                 _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.3f);
                 if (Input.GetMouseButtonDown(0) && _delay <= 0) {
-                    _placementGameObject.GetComponent<Collider2D>().enabled = true;
-                    _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-
-                    // oop is fun and all until you need to do this kekw
-                    ITickableObject tickableObject = _placementGameObject.GetComponent<ITickableObject>();
-                    if (tickableObject != null)
-                    {
-                        buildableObjectTicker.AddTickableObject(tickableObject);
-                    }
-                    
-                    _placementBuildableObject.SetBuilt(true);
-                    _placementBuildableObject.SetOwner(_player);
-                    buildingButton.SetActive(true);
-                    buildingText.SetActive(false);
-                    _player.GetComponent<PlayerLinking>().ResetCooldown();
-                    _building = false;
+                    ConfirmBuildObject();
                     return;
                 }
             }
@@ -66,16 +54,7 @@ namespace PlayerScripts
             }
             
             if (Input.GetMouseButtonDown(1)) {
-                _player.moneyText.SetMoney(_player.moneyText.GetMoney() + _placementBuildableObject.GetCost());
-                
-                Destroy(_placementGameObject);
-                _placementGameObject = null;
-                _placementBuildableObject = null;
-                
-                buildingButton.SetActive(true);
-                buildingText.SetActive(false);
-                _player.GetComponent<PlayerLinking>().ResetCooldown();
-                _building = false;
+                CancelBuildObject();
                 return;
             }
 
@@ -85,20 +64,61 @@ namespace PlayerScripts
             }
         }
 
-        public void CreateObject(BuildableObject buildableObject)
+        public void CancelBuildObject()
+        {
+            Destroy(_placementGameObject);
+            _placementGameObject = null;
+            _placementBuildableObject = null;
+                
+            buildingButton.SetActive(true);
+            buildingText.SetActive(false);
+            _player.GetComponent<PlayerLinking>().ResetCooldown();
+            _building = false;
+        }
+
+        public void ConfirmBuildObject()
+        {
+            _placementGameObject.GetComponent<Collider2D>().enabled = true;
+            _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
+                    
+            _player.GetComponent<PlayerMoney>().SetMoney(_player.GetComponent<PlayerMoney>().GetMoney() - _placementBuildableObject.GetCost());
+
+            if (_progressing)
+            {
+                _player.GetComponent<PlayerMechanics>().IncreaseMechanicLevel();
+                GlobalMechanicManager.GetGlobalMechanicManager()
+                    .GetMechanic<Mechanic>(
+                        (GlobalMechanicNames) _player.GetComponent<PlayerMechanics>().GetMechanicLevel()).EnableMechanic();
+            }
+            // oop is fun and all until you need to do this kekw
+            ITickableObject tickableObject = _placementGameObject.GetComponent<ITickableObject>();
+            if (tickableObject != null)
+            {
+                buildableObjectTicker.AddTickableObject(tickableObject);
+            }
+                    
+            _placementBuildableObject.SetBuilt(true);
+            _placementBuildableObject.SetOwner(_player);
+            buildingButton.SetActive(true);
+            buildingText.SetActive(false);
+            _player.GetComponent<PlayerLinking>().ResetCooldown();
+            _building = false;
+            _progressing = false;
+        }
+
+        public void CreateObject(BuildableObject buildableObject, bool progressMechanic)
         {
             if (_building)
             {
                 return;
             }
 
-            if (_player.moneyText.GetMoney() < buildableObject.GetCost())
+            if (_player.GetComponent<PlayerMoney>().GetMoney() < buildableObject.GetCost())
             {
                 // play sound lol
             }
             else
             {
-                _player.moneyText.SetMoney(_player.moneyText.GetMoney() - buildableObject.GetCost());
                 _player.buildMenu.TogglePanel();
                 _placementGameObject = Instantiate(buildableObject.gameObject);
                 _placementBuildableObject = _placementGameObject.GetComponent<BuildableObject>();
@@ -111,6 +131,7 @@ namespace PlayerScripts
                 
                 _delay = 200;
                 _building = true;
+                _progressing = progressMechanic;
             }
         }
     }

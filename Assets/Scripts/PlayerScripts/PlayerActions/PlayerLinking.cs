@@ -2,7 +2,7 @@
 using BuildableObjects.LinkPorts;
 using UnityEngine;
 
-namespace PlayerScripts
+namespace PlayerScripts.PlayerActions
 {
     public class PlayerLinking : MonoBehaviour
     {

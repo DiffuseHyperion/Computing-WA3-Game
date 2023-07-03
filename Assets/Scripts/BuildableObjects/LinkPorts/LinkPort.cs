@@ -1,8 +1,5 @@
-﻿using System;
-using PlayerScripts;
-using Unity.VisualScripting;
+﻿using PlayerScripts.PlayerActions;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace BuildableObjects.LinkPorts
 {
@@ -10,25 +7,42 @@ namespace BuildableObjects.LinkPorts
     {
         private LinkableObject _linkableObject;
         private bool _linked;
-        private Color _defaultColour;
-        public readonly Color HighlightColour;
-        public readonly Color LinkingColour;
-        public readonly Color LinkedColour;
-        public readonly Color CancelLinkColour;
+        private readonly Color _defaultColour;
+        private readonly Color _highlightColour;
+        private readonly Color _linkingColour;
+        private readonly Color _linkedColour;
+        private readonly Color _cancelLinkColour;
 
         public LinkPort(Color defaultColour)
         {
             _defaultColour = defaultColour;
-            HighlightColour = new Color(1f, 1f, 0f, 1f);
-            LinkingColour = new Color(0f, 0f, 1f, 1f);
-            LinkedColour = new Color(0f, 0f, 0f, 1f);
-            CancelLinkColour = new Color(1f, 0f, 0f, 1f);
+            _highlightColour = new Color(1f, 1f, 0f, 1f);
+            _linkingColour = new Color(0f, 0f, 1f, 1f);
+            _linkedColour = new Color(0f, 0f, 0f, 1f);
+            _cancelLinkColour = new Color(1f, 0f, 0f, 1f);
         }
         
         private void Start()
         {
             _linked = false;
             _linkableObject = gameObject.GetComponentInParent<LinkableObject>();
+        }
+
+        public Color GetHighlightColour()
+        {
+            return _highlightColour;
+        }
+        public Color GetLinkingColour()
+        {
+            return _linkingColour;
+        }
+        public Color GetLinkedColour()
+        {
+            return _linkedColour;
+        }
+        public Color GetCancelLinkColour()
+        {
+            return _cancelLinkColour;
         }
 
         public LinkableObject GetLinkableObject()
@@ -59,30 +73,30 @@ namespace BuildableObjects.LinkPorts
                 {
                     if (this is LinkInput)
                     {
-                        gameObject.GetComponent<SpriteRenderer>().color = HighlightColour;
+                        gameObject.GetComponent<SpriteRenderer>().color = _highlightColour;
                     }
                     return;
                 }
                 if (playerLinking.GetLinkPort() == this)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = HighlightColour;
+                    gameObject.GetComponent<SpriteRenderer>().color = _highlightColour;
                     return;
                 }
                 if (this is LinkOutput && playerLinking.GetLinkPort().GetLinkableObject() != _linkableObject)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = HighlightColour;
+                    gameObject.GetComponent<SpriteRenderer>().color = _highlightColour;
                 }
             }
             else 
             {
                 if (!playerLinking.IsLinking())
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = CancelLinkColour;
+                    gameObject.GetComponent<SpriteRenderer>().color = _cancelLinkColour;
                     return;
                 }
                 if (this is LinkOutput && playerLinking.GetLinkPort().GetLinkableObject() != _linkableObject)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = HighlightColour;
+                    gameObject.GetComponent<SpriteRenderer>().color = _highlightColour;
                 }
             }
         }
@@ -106,7 +120,7 @@ namespace BuildableObjects.LinkPorts
                 }
                 if (playerLinking.GetLinkPort() == this)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = LinkingColour;
+                    gameObject.GetComponent<SpriteRenderer>().color = _linkingColour;
                     return;
                 }
             
@@ -119,19 +133,19 @@ namespace BuildableObjects.LinkPorts
             {
                 if (!playerLinking.IsLinking())
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = LinkedColour;
+                    gameObject.GetComponent<SpriteRenderer>().color = _linkedColour;
                     return;
                 }
                 if (this is LinkOutput && playerLinking.GetLinkPort().GetLinkableObject() != _linkableObject)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = LinkedColour;
+                    gameObject.GetComponent<SpriteRenderer>().color = _linkedColour;
                 }
             }
         }
 
         public void EnableLinked()
         {
-            gameObject.GetComponent<SpriteRenderer>().color = LinkedColour;
+            gameObject.GetComponent<SpriteRenderer>().color = _linkedColour;
             _linked = true;
         }
 

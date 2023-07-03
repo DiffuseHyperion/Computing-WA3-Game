@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace PlayerScripts
+namespace PlayerScripts.PlayerActions
 {
     public class PlayerMachineStats : MonoBehaviour
     {
@@ -41,7 +41,7 @@ namespace PlayerScripts
 
         public void UpdatePanelText()
         {
-            _stats.GetComponentInChildren<TextMeshProUGUI>().text = "Total value: " + _machineObject.GetWaterStorage().GetTotalValue();
+            _stats.GetComponentInChildren<TextMeshProUGUI>().text = "Total Stored: " + _machineObject.GetWaterStorage().GetCount() + "L / " + _machineObject.GetWaterStorage().GetMax() + "L\nTotal Value: $" + _machineObject.GetWaterStorage().GetTotalValue();
         }
         
         public void DisablePanel()

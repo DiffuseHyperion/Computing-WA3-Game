@@ -6,9 +6,8 @@ TagManager:
   tags:
   - Water
   - Land
-  - BuildableObject
-  - Money
-  - BuildableObjectManager
+  - BuildableObjectTicker
+  - GlobalMechanicManager
   layers:
   - Default
   - TransparentFX

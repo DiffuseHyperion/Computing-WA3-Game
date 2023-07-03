@@ -4,10 +4,11 @@ namespace BuildableObjects.BaseMachineClasses
 {
     public abstract class GeneratorObject : MachineObject, ITickableObject
     {
-        private int _genValue;
-        private CountdownObject _countdownObject;
+        private readonly int _genValue;
+        private int _genAmount;
+        private readonly CountdownObject _countdownObject;
 
-        protected GeneratorObject(string name, string description, int cost, int max, int moveRate, int genRate, int genValue) : base(name, description, cost, max, moveRate, BuildableObjectTypes.Generator)
+        protected GeneratorObject(string name, string description, int cost, int max, int moveRate, int genRate, int genValue, int genAmount) : base(name, description, cost, max, moveRate, BuildableObjectTypes.Generator)
         {
             _countdownObject = new CountdownObject(genRate);
             _genValue = genValue;
@@ -15,13 +16,16 @@ namespace BuildableObjects.BaseMachineClasses
 
         public abstract void Tick();
 
-        public void GenerateWaterTick()
+        protected void GenerateWaterTick()
         {
             if (!_countdownObject.Countdown())
             {
                 return;
             }
-            GetWaterStorage().AddWater(new WaterObject(_genValue));
+            for (int i = 0; i < _genAmount; i++)
+            {
+                GetWaterStorage().AddWater(new WaterObject(_genValue));
+            }
         }
     }
 }

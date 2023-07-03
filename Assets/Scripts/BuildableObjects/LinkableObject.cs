@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using BuildableObjects.LinkPorts;
-using UnityEngine;
 
 namespace BuildableObjects
 {
     public abstract class LinkableObject : BuildableObject
     {
         private bool _linked;
-        private Dictionary<LinkInput, LinkOutput> _linkPairs = new();
-        private Dictionary<LinkOutput, LinkInput> _reverseLinkPairs = new();
+        private readonly Dictionary<LinkInput, LinkOutput> _linkPairs = new();
+        private readonly Dictionary<LinkOutput, LinkInput> _reverseLinkPairs = new();
 
         protected LinkableObject(string name, string description, int cost, BuildableObjectTypes type) : base(name, description, cost, type)
         {

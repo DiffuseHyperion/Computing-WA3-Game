@@ -6,8 +6,8 @@ namespace BuildableObjects.BaseMachineClasses
 {
     public abstract class AdditiveUpgraderObject : UpgraderObject, ITickableObject
     {
-        private int _bonus;
-        private CountdownObject _countdownObject;
+        private readonly int _bonus;
+        private readonly CountdownObject _countdownObject;
         protected AdditiveUpgraderObject(string name, string description, int cost, int maxStorage, int moveRate, int bonus) : base(name, description, cost, maxStorage, moveRate)
         {
             _bonus = bonus;
@@ -16,7 +16,7 @@ namespace BuildableObjects.BaseMachineClasses
 
         public abstract void Tick();
 
-        public void MoveUpgradedWaterTick()
+        protected void MoveUpgradedWaterTick()
         {
             if (!_countdownObject.Countdown())
             {

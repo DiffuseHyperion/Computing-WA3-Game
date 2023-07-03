@@ -11,7 +11,8 @@ namespace BuildableObjects.Tier1
             MachineObjectConstants.GeneratorDefaultWaterStorageSize, 
             MachineObjectConstants.GeneratorDefaultWaterMoveRate, 
             2,
-            5
+            5,
+            1
             )
         {
         }

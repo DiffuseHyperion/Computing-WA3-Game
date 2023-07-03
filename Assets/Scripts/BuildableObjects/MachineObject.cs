@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BuildableObjects.LinkPorts;
-using UnityEngine;
 using UtilClasses;
 
 namespace BuildableObjects
 {
     public abstract class MachineObject : LinkableObject
     {
-        private WaterStorageObject _waterStorageObject;
-        private CountdownObject _countdownObject;
+        private readonly WaterStorageObject _waterStorageObject;
+        private readonly CountdownObject _countdownObject;
 
-        public MachineObject(string name, string description, int cost, int maxStorage, int moveRate, BuildableObjectTypes type) : base(name, description, cost, type)
+        protected MachineObject(string name, string description, int cost, int maxStorage, int moveRate, BuildableObjectTypes type) : base(name, description, cost, type)
         {
             _waterStorageObject = new WaterStorageObject(maxStorage);
             _countdownObject = new CountdownObject(moveRate);

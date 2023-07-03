@@ -1,4 +1,5 @@
 ﻿using System;
+using PlayerScripts.PlayerActions;
 using UtilClasses;
 
 namespace BuildableObjects.BaseMachineClasses
@@ -6,8 +7,8 @@ namespace BuildableObjects.BaseMachineClasses
     public abstract class CollectorObject : MachineObject, ITickableObject
     {
 
-        private float _multiplier;
-        private CountdownObject _countdownObject;
+        private readonly float _multiplier;
+        private readonly CountdownObject _countdownObject;
         protected CollectorObject(string name, string description, int cost, int maxStorage, int moveRate, int sellRate, float multiplier) : base(name, description, cost, maxStorage, moveRate, BuildableObjectTypes.Collector)
         {
             // moveRate goes unused in collectorobjects because collectors should never move any water, but still :shrug:
@@ -17,7 +18,7 @@ namespace BuildableObjects.BaseMachineClasses
 
         public abstract void Tick();
 
-        public void CollectWaterTick()
+        protected void CollectWaterTick()
         {
             if (!_countdownObject.Countdown())
             {
@@ -29,7 +30,7 @@ namespace BuildableObjects.BaseMachineClasses
             }
             WaterObject sellingWater = GetWaterStorage().RemoveWater();
             int finalValue = (int) Math.Floor(sellingWater.GetValue() * _multiplier);
-            GetPlayer().moneyText.IncrementMoney(finalValue);
+            GetPlayer().GetComponent<PlayerMoney>().IncrementMoney(finalValue);
         }
     }
 }

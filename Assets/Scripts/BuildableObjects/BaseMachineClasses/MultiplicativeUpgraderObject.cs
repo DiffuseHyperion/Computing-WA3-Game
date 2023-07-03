@@ -6,8 +6,8 @@ namespace BuildableObjects.BaseMachineClasses
 {
     public abstract class MultiplicativeUpgraderObject : UpgraderObject, ITickableObject
     {
-        private float _multiplier;
-        private CountdownObject _countdownObject;
+        private readonly float _multiplier;
+        private readonly CountdownObject _countdownObject;
         protected MultiplicativeUpgraderObject(string name, string description, int cost, int maxStorage, int moveRate, float multiplier) : base(name, description, cost, maxStorage, moveRate)
         {
             _multiplier = multiplier;
@@ -16,7 +16,7 @@ namespace BuildableObjects.BaseMachineClasses
 
         public abstract void Tick();
 
-        public void MoveUpgradedWaterTick()
+        protected void MoveUpgradedWaterTick()
         {
             if (!_countdownObject.Countdown())
             {

@@ -6,7 +6,7 @@ namespace BuildableObjects.Tier1
 {
     public class Splitter : MachineObject, ITickableObject
     {
-        private CountdownObject _countdownObject;
+        private readonly CountdownObject _countdownObject;
 
         public Splitter() : base(
             "Splitter", 

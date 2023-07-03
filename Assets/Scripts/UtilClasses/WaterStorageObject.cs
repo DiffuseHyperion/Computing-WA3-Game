@@ -57,6 +57,11 @@ namespace UtilClasses
         {
             return _storage.Count <= 0;
         }
+
+        public int GetMax()
+        {
+            return _size;
+        }
         
     }
 }

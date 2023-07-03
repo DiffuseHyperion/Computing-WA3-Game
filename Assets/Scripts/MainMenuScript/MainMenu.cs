@@ -1,18 +1,20 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+namespace MainMenuScript
 {
-
-    public string sceneName;
-    public void ChangeScene()
+    public class MainMenu : MonoBehaviour
     {
-        SceneManager.LoadScene(sceneName);
-    }
 
-    public void Quit()
-    {
-        Application.Quit();
+        public string sceneName;
+        public void ChangeScene()
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+
+        public void Quit()
+        {
+            Application.Quit();
+        }
     }
 }
