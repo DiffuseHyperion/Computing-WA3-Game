@@ -10,10 +10,13 @@ namespace PlayerScripts.PlayerBuildMenu
 {
     public class PlayerBuildMenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        [SerializeField]
+        private List<BuildableObject> buildableObjects = new();
+        [SerializeField]
+        private bool progressButton;
+        
         private PlayerBuildMenu _menu;
-        public List<BuildableObject> buildableObjects = new();
-        public bool progressButton;
-        protected BuildableObject CurrentBuildableObject;
+        private BuildableObject _currentBuildableObject;
         private int _currentIndex;
         private Button _button;
 
@@ -21,24 +24,24 @@ namespace PlayerScripts.PlayerBuildMenu
         {
             _menu = GetComponentInParent<PlayerBuildMenu>();
             _button = gameObject.GetComponent<Button>();
-            CurrentBuildableObject = buildableObjects[_currentIndex];
+            _currentBuildableObject = buildableObjects[_currentIndex];
             
-            _button.GetComponentInChildren<TextMeshProUGUI>().text = CurrentBuildableObject.GetName();
+            _button.GetComponentInChildren<TextMeshProUGUI>().text = _currentBuildableObject.GetName();
         }
 
         public void OnClick()
         {
-            GetComponentInParent<PlayerBuilding>().CreateObject(CurrentBuildableObject, progressButton && GetComponentInParent<PlayerMechanics>().GetMechanicLevel() <= _currentIndex);
+            GetComponentInParent<PlayerBuilding>().CreateObject(_currentBuildableObject, progressButton && GetComponentInParent<PlayerMechanics>().GetMechanicLevel() <= _currentIndex);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _menu.description.GetComponent<PlayerBuildMenuDescription>().EnablePanel(CurrentBuildableObject);
+            _menu.GetDescriptionUI().EnablePanel(_currentBuildableObject);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            _menu.description.GetComponent<PlayerBuildMenuDescription>().DisablePanel();
+            _menu.GetDescriptionUI().GetComponent<PlayerBuildMenuDescription>().DisablePanel();
         }
 
         public void RotateRight()
@@ -48,11 +51,11 @@ namespace PlayerScripts.PlayerBuildMenu
             {
                 _currentIndex = 0;
             }
-            CurrentBuildableObject = buildableObjects[_currentIndex];
+            _currentBuildableObject = buildableObjects[_currentIndex];
             
             
-            _button.GetComponentInChildren<TextMeshProUGUI>().text = CurrentBuildableObject.GetName();
-            _menu.description.GetComponent<PlayerBuildMenuDescription>().UpdatePanel(CurrentBuildableObject);
+            _button.GetComponentInChildren<TextMeshProUGUI>().text = _currentBuildableObject.GetName();
+            _menu.GetDescriptionUI().UpdatePanel(_currentBuildableObject);
         }
 
         public void RotateLeft()
@@ -62,11 +65,11 @@ namespace PlayerScripts.PlayerBuildMenu
             {
                 _currentIndex = buildableObjects.Count - 1;
             }
-            CurrentBuildableObject = buildableObjects[_currentIndex];
+            _currentBuildableObject = buildableObjects[_currentIndex];
             
             
-            _button.GetComponentInChildren<TextMeshProUGUI>().text = CurrentBuildableObject.GetName();
-            _menu.description.GetComponent<PlayerBuildMenuDescription>().UpdatePanel(CurrentBuildableObject);
+            _button.GetComponentInChildren<TextMeshProUGUI>().text = _currentBuildableObject.GetName();
+            _menu.GetDescriptionUI().UpdatePanel(_currentBuildableObject);
         }
     }
 }

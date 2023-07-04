@@ -7,34 +7,49 @@ namespace PlayerScripts.PlayerActions
 {
     public class PlayerUI : MonoBehaviour
     {
-        private Dictionary<PlayerUIBarNames, PlayerUIBar> _uiBars = new();
-        public PlayerUIBarNames[] UIBarNames;
-        public PlayerUIBar[] UIBar;
-
-        public PlayerUIBuildButton buildButton;
+        [SerializeField] 
+        private PlayerUIBarNames[] uiBarNames;
+        [SerializeField] 
+        private PlayerUIBar[] uiBar;
+        [SerializeField]
+        private PlayerUIBuildButton buildButton;
         
+        private Dictionary<PlayerUIBarNames, PlayerUIBar> _uiBars = new();
         public delegate void OnUIInitialized();
         public OnUIInitialized OnUIInitializedEvent;
 
-        private void Start()
+        private void Awake()
         {
-            if (UIBarNames.Length != UIBar.Length)
-            {
-                throw new ArgumentException("UIBarNames and UIBar lengths do not match up!");
-            }
+            InitUIBars();
+        }
 
-            // scuffed way of initializing dict because unity doesnt support it lol
-            for (int i = 0; i < UIBarNames.Length; i++)
-            {
-                _uiBars.Add(UIBarNames[i], UIBar[i]);
-            }
-
-            OnUIInitializedEvent();
+        void Start()
+        {
+            OnUIInitializedEvent.Invoke();
         }
 
         public T GetBar<T>(PlayerUIBarNames name) where T : PlayerUIBar
         {
             return (T) _uiBars[name];
+        }
+
+        private void InitUIBars()
+        {
+            if (uiBarNames.Length != uiBar.Length)
+            {
+                throw new ArgumentException("UIBarNames and UIBar lengths do not match up!");
+            }
+
+            // scuffed way of initializing dict because unity doesnt support it lol
+            for (int i = 0; i < uiBarNames.Length; i++)
+            {
+                _uiBars.Add(uiBarNames[i], uiBar[i]);
+            }
+        }
+
+        public PlayerUIBar[] GetUIBars()
+        {
+            return uiBar;
         }
     }
 }

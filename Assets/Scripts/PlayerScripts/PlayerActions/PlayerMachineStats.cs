@@ -8,7 +8,9 @@ namespace PlayerScripts.PlayerActions
     {
         private MachineObject _machineObject;
         private GameObject _stats;
-        public GameObject statsPanel;
+        
+        [SerializeField] 
+        private GameObject statsPanel;
         private void Update()
         {
             if (_machineObject != null)
@@ -35,7 +37,7 @@ namespace PlayerScripts.PlayerActions
         public void UpdatePanelPos()
         {
             Vector3 mousePos = Input.mousePosition;
-            mousePos.y -= 100;
+            mousePos.y -= 200;
             statsPanel.transform.position = mousePos;
         }
 

@@ -8,7 +8,9 @@ namespace PlayerScripts.PlayerBuildMenu
     {
         
         private GameObject _description;
-        public GameObject descriptionPanel;
+        
+        [SerializeField]
+        private GameObject descriptionPanel;
         private void Update()
         {
             UpdatePanelPos();
@@ -39,8 +41,8 @@ namespace PlayerScripts.PlayerBuildMenu
         private void UpdatePanelPos()
         {
             Vector3 mousePos = Input.mousePosition;
-            mousePos.x += 105;
-            mousePos.y -= 75;
+            mousePos.x += 160;
+            mousePos.y -= 110;
             descriptionPanel.transform.position = mousePos;
         }
         

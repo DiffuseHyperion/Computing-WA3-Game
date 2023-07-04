@@ -55,12 +55,12 @@ namespace BuildableObjects
 
         public void OnMouseEnter()
         {
-            GetPlayer().machineStats.EnablePanel(this);
+            GetPlayer().GetMachineStatsMenu().EnablePanel(this);
         }
 
         public void OnMouseExit()
         {
-            GetPlayer().machineStats.DisablePanel();
+            GetPlayer().GetMachineStatsMenu().DisablePanel();
         }
     }
 }

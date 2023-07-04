@@ -10,7 +10,8 @@ namespace PlayerScripts.PlayerActions
         private LinkInput _linkInput;
         private int _cooldown;
 
-        public Material lineRendererMaterial;
+        [SerializeField] 
+        private Material lineRendererMaterial;
 
         private void Start()
         {

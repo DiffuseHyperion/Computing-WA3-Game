@@ -9,16 +9,19 @@ namespace PlayerScripts.PlayerActions
     {
         private int _money;
         private TextMeshProUGUI _moneyText;
-        public int startingMoney;
+        private Player _player;
+        [SerializeField] 
+        private int startingMoney;
 
-        void Start()
+        void Awake()
         {
-            gameObject.GetComponent<Player>().uiMenu.OnUIInitializedEvent += OnUIMenuInitialized;
+            _player = gameObject.GetComponent<Player>();
+            _player.GetUIMenu().OnUIInitializedEvent += OnUIMenuInitialized;
         }
 
         void OnUIMenuInitialized()
         {
-            _moneyText = gameObject.GetComponent<Player>().uiMenu.GetBar<PlayerUIBar>(PlayerUIBarNames.MONEY).GetText();
+            _moneyText = _player.GetUIMenu().GetBar<PlayerUIBar>(PlayerUIBarNames.MONEY).GetComponentInChildren<TextMeshProUGUI>();
             SetMoney(startingMoney);
         }
 
@@ -30,10 +33,6 @@ namespace PlayerScripts.PlayerActions
         public void SetMoney(int money)
         {
             _money = money;
-            if (_moneyText == null)
-            {
-                Debug.Log("moneyText null");
-            }
             _moneyText.text = "Money: " + _money;
         }
         
@@ -41,6 +40,26 @@ namespace PlayerScripts.PlayerActions
         {
             _money += money;
             _moneyText.text = "Money: " + _money;
+        }
+
+        public void FlashError()
+        {
+            FlashRed();
+            Invoke(nameof(FlashWhite), 0.2f);
+            Invoke(nameof(FlashRed), 0.4f);
+            Invoke(nameof(FlashWhite), 0.6f);
+            Invoke(nameof(FlashRed), 0.8f);
+            Invoke(nameof(FlashWhite), 1f);
+        }
+
+        private void FlashRed()
+        {
+            _moneyText.color = new Color(1f, 0, 0);
+        }
+        
+        private void FlashWhite()
+        {
+            _moneyText.color = new Color(1f, 1f, 1f);
         }
     }
 }

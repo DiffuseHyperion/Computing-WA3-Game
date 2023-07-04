@@ -7,9 +7,13 @@ namespace PlayerScripts.PlayerActions
 {
     public class PlayerBuilding : MonoBehaviour
     {
-        public GameObject buildingButton;
-        public GameObject buildingText;
-        public BuildableObjectTicker buildableObjectTicker;
+        [SerializeField] 
+        private GameObject buildingButton;
+        [SerializeField] 
+        private GameObject buildingText;
+        [SerializeField] 
+        private BuildableObjectTicker buildableObjectTicker;
+        
         private GameObject _placementGameObject;
         private BuildableObject _placementBuildableObject;
         private Player _player;
@@ -115,24 +119,23 @@ namespace PlayerScripts.PlayerActions
 
             if (_player.GetComponent<PlayerMoney>().GetMoney() < buildableObject.GetCost())
             {
-                // play sound lol
+                _player.GetComponent<PlayerSoundManager>().PlayErrorSound();
+                _player.GetComponent<PlayerMoney>().FlashError();
+                return;
             }
-            else
-            {
-                _player.buildMenu.TogglePanel();
-                _placementGameObject = Instantiate(buildableObject.gameObject);
-                _placementBuildableObject = _placementGameObject.GetComponent<BuildableObject>();
-                _placementGameObject.GetComponent<Collider2D>().enabled = false;
-                _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.3f);
+            _player.GetBuildMenu().TogglePanel();
+            _placementGameObject = Instantiate(buildableObject.gameObject);
+            _placementBuildableObject = _placementGameObject.GetComponent<BuildableObject>();
+            _placementGameObject.GetComponent<Collider2D>().enabled = false;
+            _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.3f);
                 
-                _player.buildMenu.description.GetComponent<PlayerBuildMenuDescription>().DisablePanel();
-                buildingButton.SetActive(false);
-                buildingText.SetActive(true);
+            _player.GetBuildMenu().GetDescriptionUI().DisablePanel();
+            buildingButton.SetActive(false);
+            buildingText.SetActive(true);
                 
-                _delay = 200;
-                _building = true;
-                _progressing = progressMechanic;
-            }
+            _delay = 200;
+            _building = true;
+            _progressing = progressMechanic;
         }
     }
 }

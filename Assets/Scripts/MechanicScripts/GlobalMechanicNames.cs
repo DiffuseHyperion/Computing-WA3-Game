@@ -2,7 +2,8 @@
 {
     public enum GlobalMechanicNames
     {
-        NONE,
-        ELECTRICITY
+        NONE, // should not be used, only here for padding lol
+        ELECTRICITY,
+        RUST
     }
 }

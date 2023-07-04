@@ -2,8 +2,8 @@
 {
     public enum PlayerUIBarNames
     {
-        // should just be GlobalMechanicNames + MONEY
-        ELECTRICITY,
-        MONEY
+        // should just be MONEY + GlobalMechanicNames
+        MONEY,
+        ELECTRICITY
     }
 }

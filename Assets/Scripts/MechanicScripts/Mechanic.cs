@@ -25,7 +25,7 @@ namespace MechanicScripts
             _isEnabled = true;
             foreach (var player in Player.GetAllPlayers())
             {
-                player.uiMenu.GetBar<PlayerUIBar>(_uiBarName).EnableBar();
+                player.GetUIMenu().GetBar<PlayerUIBar>(_uiBarName).EnableBar();
             }
         }
 
@@ -34,7 +34,7 @@ namespace MechanicScripts
             _isEnabled = false;
             foreach (var player in Player.GetAllPlayers())
             {
-                player.uiMenu.GetBar<PlayerUIBar>(_uiBarName).DisableBar();
+                player.GetUIMenu().GetBar<PlayerUIBar>(_uiBarName).DisableBar();
             }
         }
 

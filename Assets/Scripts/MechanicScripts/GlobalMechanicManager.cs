@@ -5,16 +5,16 @@ namespace MechanicScripts
 {
     public class GlobalMechanicManager : MonoBehaviour
     {
-        public Dictionary<GlobalMechanicNames, Mechanic> Mechanics = new();
+        private readonly Dictionary<GlobalMechanicNames, Mechanic> _mechanics = new();
 
         public GlobalMechanicManager()
         {
-            Mechanics.Add(GlobalMechanicNames.ELECTRICITY, new ElectricityMechanic());
+            _mechanics.Add(GlobalMechanicNames.ELECTRICITY, new ElectricityMechanic());
         }
         
         public T GetMechanic<T>(GlobalMechanicNames mechanicName) where T : Mechanic
         {
-            return (T) Mechanics[mechanicName];
+            return (T) _mechanics[mechanicName];
         }
 
         public static GlobalMechanicManager GetGlobalMechanicManager()

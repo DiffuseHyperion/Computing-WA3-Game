@@ -4,7 +4,8 @@ namespace PlayerScripts.PlayerActions
 {
     public class PlayerMovement : MonoBehaviour
     {
-        public float speed;
+        [SerializeField]
+        private float speed;
         private Rigidbody2D _rigidbody;
         private Vector2 _move;
         

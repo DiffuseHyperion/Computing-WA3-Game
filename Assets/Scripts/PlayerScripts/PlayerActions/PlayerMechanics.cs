@@ -1,16 +1,15 @@
-﻿using System;
-using PlayerScripts.PlayerUI;
+﻿using PlayerScripts.PlayerUI;
 using UnityEngine;
 
 namespace PlayerScripts.PlayerActions
 {
     public class PlayerMechanics : MonoBehaviour
     {
-        private int _mechanicLevel = 0;
+        private int _mechanicLevel;
 
-        private void Start()
+        private void Awake()
         {
-            PlayerUI playerUI = GetComponent<Player>().uiMenu;
+            PlayerUI playerUI = GetComponent<Player>().GetUIMenu();
             playerUI.OnUIInitializedEvent += UpdateUIBars;
         }
 
@@ -22,18 +21,19 @@ namespace PlayerScripts.PlayerActions
         public void IncreaseMechanicLevel()
         {
             _mechanicLevel++;
-            //UpdateUIBars();
+            GetComponent<Player>().GetBuildMenu().UpdateLeftRightButtons();
+            // UpdateUIBars();    (Mechanic.EnableMechanic() already enables bar)
         }
         
         public void UpdateUIBars()
         {
-            PlayerUI playerUI = GetComponent<Player>().uiMenu;
-            for (int i = 0; i < playerUI.UIBar.Length; i++)
+            PlayerUI playerUI = GetComponent<Player>().GetUIMenu();
+            for (int i = 0; i < playerUI.GetUIBars().Length; i++)
             {
-                PlayerUIBar bar = playerUI.UIBar[i];
+                PlayerUIBar bar = playerUI.GetUIBars()[i];
                 if (i <= _mechanicLevel)
                 {
-                    bar.EnableBar();
+                    bar.PreEnableBar();
                 }
                 else
                 {
