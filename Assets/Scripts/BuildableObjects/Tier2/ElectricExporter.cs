@@ -25,6 +25,10 @@ namespace BuildableObjects.Tier2
 
         public override void Tick()
         {
+            if (!GlobalMechanicManager.GetGlobalMechanicManager().GetMechanic<ElectricityMechanic>(GlobalMechanicNames.ELECTRICITY).IsPowered())
+            {
+                return;
+            }
             CollectWaterTick();
         }
 
