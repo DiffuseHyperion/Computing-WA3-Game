@@ -14,6 +14,7 @@ namespace BuildableObjects.Tier1
             10,
             3,
             1,
+            1,
             BuildableObjectTypes.Misc)
         {
             _countdownObject = new CountdownObject(1); // should be same as moverate, lazy to make constant field lol

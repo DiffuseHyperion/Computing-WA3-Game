@@ -4,6 +4,7 @@
     {
         // should just be MONEY + GlobalMechanicNames
         MONEY,
-        ELECTRICITY
+        ELECTRICITY,
+        RUST
     }
 }

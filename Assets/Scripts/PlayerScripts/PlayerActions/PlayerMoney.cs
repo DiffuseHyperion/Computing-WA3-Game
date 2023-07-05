@@ -21,7 +21,7 @@ namespace PlayerScripts.PlayerActions
 
         void OnUIMenuInitialized()
         {
-            _moneyText = _player.GetUIMenu().GetBar<PlayerUIBar>(PlayerUIBarNames.MONEY).GetComponentInChildren<TextMeshProUGUI>();
+            _moneyText = _player.GetUIMenu().GetBar<PlayerUIBar>(PlayerUIBarNames.MONEY).GetText();
             SetMoney(startingMoney);
         }
 

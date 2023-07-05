@@ -1,4 +1,5 @@
 ﻿using BuildableObjects.BaseMachineClasses;
+using UnityEngine;
 
 namespace BuildableObjects.Tier1
 {
@@ -10,6 +11,7 @@ namespace BuildableObjects.Tier1
             50, 
             MachineObjectConstants.GeneratorDefaultWaterStorageSize, 
             MachineObjectConstants.GeneratorDefaultWaterMoveRate, 
+            1,
             2,
             5,
             1

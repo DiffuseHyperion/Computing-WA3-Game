@@ -8,6 +8,7 @@
             50,
             10,
             1, 
+            1,
             BuildableObjectTypes.Misc)
         {
         }

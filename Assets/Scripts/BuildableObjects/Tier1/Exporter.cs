@@ -10,7 +10,9 @@ namespace BuildableObjects.Tier1
             50, 
             MachineObjectConstants.ExporterDefaultWaterStorageSize, 
             MachineObjectConstants.ExporterDefaultWaterMoveRate, 
-            3, 
+            1,
+            3,
+            1,
             1f)
         {
         }

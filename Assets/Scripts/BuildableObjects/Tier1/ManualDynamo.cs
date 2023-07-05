@@ -29,15 +29,15 @@ namespace BuildableObjects.Tier1
 
             _powered = true;
             GlobalMechanicManager.GetGlobalMechanicManager().GetMechanic<ElectricityMechanic>(GlobalMechanicNames.ELECTRICITY).IncreasePowerProduction(5);
-            GetComponent<SpriteRenderer>().material.color = new Color(0, 0.5f, 0, 1f);
+            GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0);
             Invoke(nameof(PowerDown), 5f);
         }
 
         public void PowerDown()
         {
             _powered = false;
-            GlobalMechanicManager.GetGlobalMechanicManager().GetMechanic<ElectricityMechanic>(GlobalMechanicNames.ELECTRICITY).DecreasePowerConsumption(5);
-            GetComponent<SpriteRenderer>().material.color = new Color(0.5f, 0f, 0, 1f);
+            GlobalMechanicManager.GetGlobalMechanicManager().GetMechanic<ElectricityMechanic>(GlobalMechanicNames.ELECTRICITY).DecreasePowerProduction(5);
+            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 0.7f);
         }
     }
 } 

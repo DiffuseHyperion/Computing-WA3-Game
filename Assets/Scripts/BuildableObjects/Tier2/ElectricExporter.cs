@@ -1,0 +1,36 @@
+﻿using BuildableObjects.BaseMachineClasses;
+using MechanicScripts;
+
+namespace BuildableObjects.Tier2
+{
+    public class ElectricExporter : CollectorObject, ITickableObject, IPoweredObject
+    {
+        public ElectricExporter() : base(
+            "Electric Exporter", 
+            "Sell big chunks water off slowly.", 
+            50, 
+            MachineObjectConstants.ExporterDefaultWaterStorageSize * 2, 
+            MachineObjectConstants.ExporterDefaultWaterMoveRate, 
+            1,
+            5,
+            5,
+            1f)
+        {
+        }
+
+        public override bool CanBuild()
+        {
+            return OnLand();
+        }
+
+        public override void Tick()
+        {
+            CollectWaterTick();
+        }
+
+        public int GetPowerConsumption()
+        {
+            return 5;
+        }
+    }
+}

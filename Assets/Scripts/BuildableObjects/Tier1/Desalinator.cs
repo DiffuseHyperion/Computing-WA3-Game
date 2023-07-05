@@ -10,6 +10,7 @@ namespace BuildableObjects.Tier1
             100, 
             MachineObjectConstants.UpgraderDefaultWaterStorageSize, 
             MachineObjectConstants.UpgraderDefaultWaterMoveRate,
+            1,
             10
             )
         {

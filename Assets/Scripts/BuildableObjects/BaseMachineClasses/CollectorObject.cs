@@ -9,10 +9,12 @@ namespace BuildableObjects.BaseMachineClasses
 
         private readonly float _multiplier;
         private readonly CountdownObject _countdownObject;
-        protected CollectorObject(string name, string description, int cost, int maxStorage, int moveRate, int sellRate, float multiplier) : base(name, description, cost, maxStorage, moveRate, BuildableObjectTypes.Collector)
+        private readonly int _sellAmount;
+        protected CollectorObject(string name, string description, int cost, int maxStorage, int moveRate, int moveAmount, int sellRate, int sellAmount, float multiplier) : base(name, description, cost, maxStorage, moveRate, moveAmount, BuildableObjectTypes.Collector)
         {
-            // moveRate goes unused in collectorobjects because collectors should never move any water, but still :shrug:
+            // moveRate and moveAmount goes unused in collectorobjects because collectors should never move any water, but lazy to rewrite abstraction :shrug:
             _multiplier = multiplier;
+            _sellAmount = sellAmount;
             _countdownObject = new CountdownObject(sellRate);
         }
 
@@ -24,13 +26,17 @@ namespace BuildableObjects.BaseMachineClasses
             {
                 return;
             }
-            if (GetWaterStorage().IsEmpty())
+
+            for (int i = 0; i < _sellAmount; i++)
             {
-                return;
+                if (GetWaterStorage().IsEmpty())
+                {
+                    return;
+                }
+                WaterObject sellingWater = GetWaterStorage().RemoveWater();
+                int finalValue = (int) Math.Floor(sellingWater.GetValue() * _multiplier);
+                GetPlayer().GetComponent<PlayerMoney>().IncrementMoney(finalValue);
             }
-            WaterObject sellingWater = GetWaterStorage().RemoveWater();
-            int finalValue = (int) Math.Floor(sellingWater.GetValue() * _multiplier);
-            GetPlayer().GetComponent<PlayerMoney>().IncrementMoney(finalValue);
         }
     }
 }

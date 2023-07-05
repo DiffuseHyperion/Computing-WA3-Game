@@ -1,4 +1,5 @@
-﻿using UtilClasses;
+﻿using UnityEngine;
+using UtilClasses;
 
 namespace BuildableObjects.BaseMachineClasses
 {
@@ -8,10 +9,11 @@ namespace BuildableObjects.BaseMachineClasses
         private int _genAmount;
         private readonly CountdownObject _countdownObject;
 
-        protected GeneratorObject(string name, string description, int cost, int max, int moveRate, int genRate, int genValue, int genAmount) : base(name, description, cost, max, moveRate, BuildableObjectTypes.Generator)
+        protected GeneratorObject(string name, string description, int cost, int max, int moveRate, int moveAmount, int genRate, int genValue, int genAmount) : base(name, description, cost, max, moveRate, moveAmount, BuildableObjectTypes.Generator)
         {
             _countdownObject = new CountdownObject(genRate);
             _genValue = genValue;
+            _genAmount = genAmount;
         }
 
         public abstract void Tick();

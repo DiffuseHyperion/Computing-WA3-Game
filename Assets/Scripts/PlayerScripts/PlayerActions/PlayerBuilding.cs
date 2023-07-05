@@ -73,7 +73,6 @@ namespace PlayerScripts.PlayerActions
             Destroy(_placementGameObject);
             _placementGameObject = null;
             _placementBuildableObject = null;
-                
             buildingButton.SetActive(true);
             buildingText.SetActive(false);
             _player.GetComponent<PlayerLinking>().ResetCooldown();
@@ -82,11 +81,6 @@ namespace PlayerScripts.PlayerActions
 
         public void ConfirmBuildObject()
         {
-            _placementGameObject.GetComponent<Collider2D>().enabled = true;
-            _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-                    
-            _player.GetComponent<PlayerMoney>().SetMoney(_player.GetComponent<PlayerMoney>().GetMoney() - _placementBuildableObject.GetCost());
-
             if (_progressing)
             {
                 _player.GetComponent<PlayerMechanics>().IncreaseMechanicLevel();
@@ -94,13 +88,22 @@ namespace PlayerScripts.PlayerActions
                     .GetMechanic<Mechanic>(
                         (GlobalMechanicNames) _player.GetComponent<PlayerMechanics>().GetMechanicLevel()).EnableMechanic();
             }
+            
             // oop is fun and all until you need to do this kekw
             ITickableObject tickableObject = _placementGameObject.GetComponent<ITickableObject>();
             if (tickableObject != null)
             {
                 buildableObjectTicker.AddTickableObject(tickableObject);
             }
-                    
+            IPoweredObject poweredObject = _placementGameObject.GetComponent<IPoweredObject>();
+            if (poweredObject != null)
+            {
+                GlobalMechanicManager.GetGlobalMechanicManager().GetMechanic<ElectricityMechanic>(GlobalMechanicNames.ELECTRICITY).IncreasePowerConsumption(poweredObject.GetPowerConsumption());
+            }
+            
+            _player.GetComponent<PlayerMoney>().SetMoney(_player.GetComponent<PlayerMoney>().GetMoney() - _placementBuildableObject.GetCost());
+            _placementGameObject.GetComponent<Collider2D>().enabled = true;
+            _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
             _placementBuildableObject.SetBuilt(true);
             _placementBuildableObject.SetOwner(_player);
             buildingButton.SetActive(true);

@@ -6,11 +6,13 @@ namespace BuildableObjects
 {
     public abstract class MachineObject : LinkableObject
     {
+        private int _moveAmount;
         private readonly WaterStorageObject _waterStorageObject;
         private readonly CountdownObject _countdownObject;
 
-        protected MachineObject(string name, string description, int cost, int maxStorage, int moveRate, BuildableObjectTypes type) : base(name, description, cost, type)
+        protected MachineObject(string name, string description, int cost, int maxStorage, int moveRate, int moveAmount, BuildableObjectTypes type) : base(name, description, cost, type)
         {
+            _moveAmount = moveAmount;
             _waterStorageObject = new WaterStorageObject(maxStorage);
             _countdownObject = new CountdownObject(moveRate);
         }
@@ -48,8 +50,17 @@ namespace BuildableObjects
                 {
                     return;
                 }
-                WaterObject transferredWater = GetWaterStorage().RemoveWater();
-                machineObject.GetWaterStorage().AddWater(transferredWater);
+
+                for (int i = 0; i < _moveAmount; i++)
+                {
+                    if (GetWaterStorage().IsEmpty())
+                    {
+                        return;
+                    }
+
+                    WaterObject transferredWater = GetWaterStorage().RemoveWater();
+                    machineObject.GetWaterStorage().AddWater(transferredWater);
+                }
             }
         }
 
