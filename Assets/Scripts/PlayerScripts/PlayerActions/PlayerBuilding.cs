@@ -136,7 +136,7 @@ namespace PlayerScripts.PlayerActions
             buildingButton.SetActive(false);
             buildingText.SetActive(true);
                 
-            _delay = 200;
+            _delay = 150;
             _building = true;
             _progressing = progressMechanic;
         }

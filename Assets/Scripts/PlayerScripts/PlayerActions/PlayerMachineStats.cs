@@ -37,7 +37,6 @@ namespace PlayerScripts.PlayerActions
         public void UpdatePanelPos()
         {
             Vector3 mousePos = Input.mousePosition;
-            mousePos.y -= 200;
             statsPanel.transform.position = mousePos;
         }
 

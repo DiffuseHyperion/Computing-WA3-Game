@@ -41,8 +41,6 @@ namespace PlayerScripts.PlayerBuildMenu
         private void UpdatePanelPos()
         {
             Vector3 mousePos = Input.mousePosition;
-            mousePos.x += 160;
-            mousePos.y -= 110;
             descriptionPanel.transform.position = mousePos;
         }
         
