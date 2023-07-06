@@ -18,7 +18,7 @@ namespace BuildableObjects.Tier2
 
         public override bool CanBuild()
         {
-            throw new System.NotImplementedException();
+            return OnLand();
         }
 
         public override void Tick()

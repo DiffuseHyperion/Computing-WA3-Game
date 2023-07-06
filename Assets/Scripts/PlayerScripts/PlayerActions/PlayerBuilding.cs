@@ -1,5 +1,5 @@
 ﻿using BuildableObjects;
-using BuildableObjects.LinkPorts;
+using BuildableObjects.Nodes;
 using MechanicScripts;
 using PlayerScripts.PlayerBuildMenu;
 using UnityEngine;
@@ -66,7 +66,6 @@ namespace PlayerScripts.PlayerActions
             if (_delay > 0)
             {
                 _delay -= Time.deltaTime;
-                Debug.Log(_delay);
             }
         }
 

@@ -20,7 +20,7 @@ namespace BuildableObjects.Tier1
             return OnLand();
         }
 
-        public void OnMouseDown()
+        private void OnMouseDown()
         {
             if (_powered)
             {
@@ -33,11 +33,11 @@ namespace BuildableObjects.Tier1
             Invoke(nameof(PowerDown), 5f);
         }
 
-        public void PowerDown()
+        private void PowerDown()
         {
             _powered = false;
             GlobalMechanicManager.GetGlobalMechanicManager().GetMechanic<ElectricityMechanic>(GlobalMechanicNames.ELECTRICITY).DecreasePowerProduction(5);
-            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 0.7f);
+            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 0.6f);
         }
     }
 } 

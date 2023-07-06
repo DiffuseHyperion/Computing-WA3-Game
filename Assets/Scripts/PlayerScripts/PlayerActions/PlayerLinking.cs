@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BuildableObjects.LinkPorts;
+using BuildableObjects.Nodes;
 using UnityEngine;
 
 namespace PlayerScripts.PlayerActions

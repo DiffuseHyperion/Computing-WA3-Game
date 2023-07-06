@@ -1,7 +1,7 @@
 ﻿using PlayerScripts.PlayerActions;
 using UnityEngine;
 
-namespace BuildableObjects.LinkPorts
+namespace BuildableObjects.Nodes
 {
     public class LinkOutput : LinkPort
     {
