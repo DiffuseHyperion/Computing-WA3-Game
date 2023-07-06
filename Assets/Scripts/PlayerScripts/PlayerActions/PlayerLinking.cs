@@ -8,7 +8,7 @@ namespace PlayerScripts.PlayerActions
     {
         private bool _linking;
         private LinkInput _linkInput;
-        private int _cooldown;
+        private float _cooldown;
 
         [SerializeField] 
         private Material lineRendererMaterial;
@@ -22,13 +22,13 @@ namespace PlayerScripts.PlayerActions
         {
             if (_cooldown > 0)
             {
-                _cooldown--;
+                _cooldown -= Time.deltaTime;
             }
         }
 
         public void ResetCooldown()
         {
-            _cooldown = 200;
+            _cooldown = 0.1f;
         }
         
         public void StartLink(LinkInput linkInput)

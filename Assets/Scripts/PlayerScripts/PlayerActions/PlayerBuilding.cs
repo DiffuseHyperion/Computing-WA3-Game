@@ -1,4 +1,5 @@
 ﻿using BuildableObjects;
+using BuildableObjects.LinkPorts;
 using MechanicScripts;
 using PlayerScripts.PlayerBuildMenu;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace PlayerScripts.PlayerActions
         private Player _player;
         private bool _building;
         private bool _progressing;
-        private int _delay;
+        private float _delay;
 
         private void Start()
         {
@@ -64,7 +65,8 @@ namespace PlayerScripts.PlayerActions
 
             if (_delay > 0)
             {
-                _delay--;
+                _delay -= Time.deltaTime;
+                Debug.Log(_delay);
             }
         }
 
@@ -103,6 +105,10 @@ namespace PlayerScripts.PlayerActions
             
             _player.GetComponent<PlayerMoney>().SetMoney(_player.GetComponent<PlayerMoney>().GetMoney() - _placementBuildableObject.GetCost());
             _placementGameObject.GetComponent<Collider2D>().enabled = true;
+            foreach (var linkPort in _placementGameObject.GetComponentsInChildren<LinkPort>())
+            {
+                linkPort.gameObject.GetComponent<Collider2D>().enabled = false;
+            }
             _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
             _placementBuildableObject.SetBuilt(true);
             _placementBuildableObject.SetOwner(_player);
@@ -131,12 +137,15 @@ namespace PlayerScripts.PlayerActions
             _placementBuildableObject = _placementGameObject.GetComponent<BuildableObject>();
             _placementGameObject.GetComponent<Collider2D>().enabled = false;
             _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.3f);
-                
+            foreach (var linkPort in _placementGameObject.GetComponentsInChildren<LinkPort>())
+            {
+                linkPort.gameObject.GetComponent<Collider2D>().enabled = false;
+            }
             _player.GetBuildMenu().GetDescriptionUI().DisablePanel();
             buildingButton.SetActive(false);
             buildingText.SetActive(true);
                 
-            _delay = 150;
+            _delay = 0.1f;
             _building = true;
             _progressing = progressMechanic;
         }
