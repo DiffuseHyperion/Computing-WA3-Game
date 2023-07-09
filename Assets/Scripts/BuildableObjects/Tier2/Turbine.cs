@@ -13,7 +13,7 @@ namespace BuildableObjects.Tier2
             "Turbine",
             "Generates electricity using water.",
             300,
-            1,
+            5,
             1,
             1,
             BuildableObjectTypes.Misc)
@@ -37,20 +37,24 @@ namespace BuildableObjects.Tier2
                 return;
             }
             
-            if (GetWaterStorage().IsEmpty())
+            if (GetWaterStorage().IsFull())
             {
-                GlobalMechanicManager.GetGlobalMechanicManager().GetMechanic<ElectricityMechanic>(GlobalMechanicNames.ELECTRICITY).DecreasePowerProduction(10);
-                _powered = false;
-            }
-            else
-            {
-                GetWaterStorage().RemoveWater();
+                GetWaterStorage().RemoveAllWater();
                 if (_powered)
                 {
                     return;
                 }
                 GlobalMechanicManager.GetGlobalMechanicManager().GetMechanic<ElectricityMechanic>(GlobalMechanicNames.ELECTRICITY).IncreasePowerProduction(10);
                 _powered = true;
+            }
+            else
+            {
+                if (!_powered)
+                {
+                    return;
+                }
+                GlobalMechanicManager.GetGlobalMechanicManager().GetMechanic<ElectricityMechanic>(GlobalMechanicNames.ELECTRICITY).DecreasePowerProduction(10);
+                _powered = false;
             }
         }
     }

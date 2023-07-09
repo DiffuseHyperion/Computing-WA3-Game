@@ -82,6 +82,7 @@ namespace PlayerScripts.PlayerActions
 
         public void ConfirmBuildObject()
         {
+            // start progressing the player
             if (_progressing)
             {
                 _player.GetComponent<PlayerMechanics>().IncreaseMechanicLevel();
@@ -90,7 +91,7 @@ namespace PlayerScripts.PlayerActions
                         (GlobalMechanicNames) _player.GetComponent<PlayerMechanics>().GetMechanicLevel()).EnableMechanic();
             }
             
-            // oop is fun and all until you need to do this kekw
+            // update relevant components
             ITickableObject tickableObject = _placementGameObject.GetComponent<ITickableObject>();
             if (tickableObject != null)
             {
@@ -102,16 +103,24 @@ namespace PlayerScripts.PlayerActions
                 GlobalMechanicManager.GetGlobalMechanicManager().GetMechanic<ElectricityMechanic>(GlobalMechanicNames.ELECTRICITY).IncreasePowerConsumption(poweredObject.GetPowerConsumption());
             }
             
+            // deduct cash
             _player.GetComponent<PlayerMoney>().SetMoney(_player.GetComponent<PlayerMoney>().GetMoney() - _placementBuildableObject.GetCost());
+            
+            // enable colliders
             _placementGameObject.GetComponent<Collider2D>().enabled = true;
             foreach (var linkPort in _placementGameObject.GetComponentsInChildren<LinkPort>())
             {
-                linkPort.gameObject.GetComponent<Collider2D>().enabled = false;
+                linkPort.gameObject.GetComponent<Collider2D>().enabled = true;
             }
-            _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-            _placementBuildableObject.SetBuilt(true);
+            
+            // toggle menus
             buildingButton.SetActive(true);
             buildingText.SetActive(false);
+            
+            // change object states
+            _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
+            _placementBuildableObject.SetBuilt(true);
+            
             _player.GetComponent<PlayerLinking>().ResetCooldown();
             _building = false;
             _progressing = false;
@@ -119,31 +128,40 @@ namespace PlayerScripts.PlayerActions
 
         public void CreateObject(BuildableObject buildableObject, bool progressMechanic)
         {
+            // check conditions
             if (_building)
             {
                 return;
             }
-
             if (_player.GetComponent<PlayerMoney>().GetMoney() < buildableObject.GetCost())
             {
                 _player.GetComponent<PlayerSoundManager>().PlayErrorSound();
                 _player.GetComponent<PlayerMoney>().FlashError();
                 return;
             }
+            
+            // toggle menus
             _player.GetBuildMenu().TogglePanel();
+            _player.GetBuildMenu().GetDescriptionUI().DisablePanel();
+            buildingButton.SetActive(false);
+            buildingText.SetActive(true);
+            
+            // init fields
             _placementGameObject = Instantiate(buildableObject.gameObject);
             _placementBuildableObject = _placementGameObject.GetComponent<BuildableObject>();
+            
+            // init values within fields
             _placementBuildableObject.SetOwner(_player);
+            
+            // disable colliders in object
             _placementGameObject.GetComponent<Collider2D>().enabled = false;
             _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.3f);
             foreach (var linkPort in _placementGameObject.GetComponentsInChildren<LinkPort>())
             {
                 linkPort.gameObject.GetComponent<Collider2D>().enabled = false;
             }
-            _player.GetBuildMenu().GetDescriptionUI().DisablePanel();
-            buildingButton.SetActive(false);
-            buildingText.SetActive(true);
-                
+
+            // init variables for loop
             _delay = 0.1f;
             _building = true;
             _progressing = progressMechanic;

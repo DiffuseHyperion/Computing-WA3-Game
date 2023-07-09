@@ -28,6 +28,11 @@ namespace UtilClasses
             return oldestWater;
         }
 
+        public void RemoveAllWater()
+        {
+            _storage.Clear();
+        }
+
         public List<WaterObject> GetStorage()
         {
             return _storage;
