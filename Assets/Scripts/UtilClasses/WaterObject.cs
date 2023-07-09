@@ -6,7 +6,7 @@ namespace UtilClasses
     public class WaterObject
     {
         private int _value;
-        private readonly List<String> _tags = new();
+        private readonly Dictionary<string, object> _tags = new();
 
         public WaterObject(int value)
         {
@@ -36,9 +36,9 @@ namespace UtilClasses
             return _value;
         }
 
-        public void AddTag(string tag)
+        public void AddTag(string tag, object value)
         {
-            _tags.Add(tag);
+            _tags.Add(tag, value);
         }
 
         public void RemoveTag(string tag)
@@ -51,9 +51,14 @@ namespace UtilClasses
             return _tags.Remove(tag);
         }
 
+        public object GetTagValue(string tag)
+        {
+            return _tags[tag];
+        }
+
         public bool ContainTag(String tag)
         {
-            return _tags.Contains(tag);
+            return _tags.ContainsKey(tag);
         }
     }
 }

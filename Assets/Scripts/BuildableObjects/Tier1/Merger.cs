@@ -1,6 +1,6 @@
 ﻿namespace BuildableObjects.Tier1
 {
-    public class Merger : MachineObject, ITickableObject
+    public class Merger : MachineObject
     {
         public Merger() : base(
             "Merger", 
@@ -18,7 +18,7 @@
             return OnLand();
         }
 
-        public void Tick()
+        public override void Tick()
         {
             MoveWaterTick();
         }

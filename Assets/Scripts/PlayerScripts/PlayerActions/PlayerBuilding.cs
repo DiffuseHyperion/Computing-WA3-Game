@@ -110,7 +110,6 @@ namespace PlayerScripts.PlayerActions
             }
             _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
             _placementBuildableObject.SetBuilt(true);
-            _placementBuildableObject.SetOwner(_player);
             buildingButton.SetActive(true);
             buildingText.SetActive(false);
             _player.GetComponent<PlayerLinking>().ResetCooldown();
@@ -134,6 +133,7 @@ namespace PlayerScripts.PlayerActions
             _player.GetBuildMenu().TogglePanel();
             _placementGameObject = Instantiate(buildableObject.gameObject);
             _placementBuildableObject = _placementGameObject.GetComponent<BuildableObject>();
+            _placementBuildableObject.SetOwner(_player);
             _placementGameObject.GetComponent<Collider2D>().enabled = false;
             _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.3f);
             foreach (var linkPort in _placementGameObject.GetComponentsInChildren<LinkPort>())

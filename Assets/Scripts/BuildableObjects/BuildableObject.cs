@@ -23,29 +23,24 @@ namespace BuildableObjects
             _type = type;
         }
 
-        private void Start()
-        {
-            _camera = Camera.main;
-        }
-
         public abstract bool CanBuild();
 
         public bool OnWater()
         {
-            int layerMask = LayerMask.GetMask("Background");
-            if (_camera != null)
+            _camera = _owner.gameObject.GetComponentInChildren<Camera>();
+            if (_camera == null)
             {
-                RaycastHit2D hit = Physics2D.Raycast(_camera.ScreenToWorldPoint(Input.mousePosition), transform.forward * 30, float.PositiveInfinity, layerMask);
-        
-                if (hit.collider != null)
-                {
-                    if (hit.collider.transform.CompareTag("Water"))
-                    {
-                        return true;
-                    }
-
-                    return false;
-                }
+                return false;
+            }
+            int layerMask = LayerMask.GetMask("Background");
+            RaycastHit2D hit = Physics2D.Raycast(_camera.ScreenToWorldPoint(Input.mousePosition), transform.forward, float.PositiveInfinity, layerMask);
+            if (hit.collider == null)
+            {
+                return false;
+            }
+            if (hit.collider.transform.CompareTag("Water"))
+            {
+                return true;
             }
 
             return false;
@@ -53,22 +48,21 @@ namespace BuildableObjects
 
         public bool OnLand()
         {
-            int layerMask = LayerMask.GetMask("Background");
-            if (_camera != null)
+            _camera = _owner.gameObject.GetComponentInChildren<Camera>();
+            if (_camera == null)
             {
-                RaycastHit2D hit = Physics2D.Raycast(_camera.ScreenToWorldPoint(Input.mousePosition), transform.forward * 30, float.PositiveInfinity, layerMask);
-        
-                if (hit.collider != null)
-                {
-                    if (hit.collider.transform.CompareTag("Land"))
-                    {
-                        return true;
-                    }
-
-                    return false;
-                }
+                return false;
             }
-
+            int layerMask = LayerMask.GetMask("Background");
+            RaycastHit2D hit = Physics2D.Raycast(_camera.ScreenToWorldPoint(Input.mousePosition), transform.forward, float.PositiveInfinity, layerMask);
+            if (hit.collider == null)
+            {
+                return false;
+            }
+            if (hit.collider.transform.CompareTag("Land"))
+            {
+                return true;
+            }
             return false;
         }
         

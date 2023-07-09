@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace BuildableObjects.Nodes
 {
@@ -6,6 +7,7 @@ namespace BuildableObjects.Nodes
     {
         private bool _state;
         private bool _isDown;
+        private Outline _outline;
         private void OnMouseDown()
         {
             if (_isDown)

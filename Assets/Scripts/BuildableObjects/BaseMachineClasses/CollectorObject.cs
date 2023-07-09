@@ -4,7 +4,7 @@ using UtilClasses;
 
 namespace BuildableObjects.BaseMachineClasses
 {
-    public abstract class CollectorObject : MachineObject, ITickableObject
+    public abstract class CollectorObject : MachineObject
     {
 
         private readonly float _multiplier;
@@ -17,8 +17,6 @@ namespace BuildableObjects.BaseMachineClasses
             _sellAmount = sellAmount;
             _countdownObject = new CountdownObject(sellRate);
         }
-
-        public abstract void Tick();
 
         protected void CollectWaterTick()
         {

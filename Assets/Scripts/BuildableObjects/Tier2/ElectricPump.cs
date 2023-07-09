@@ -3,7 +3,7 @@ using MechanicScripts;
 
 namespace BuildableObjects.Tier2
 {
-    public class ElectricPump : GeneratorObject, ITickableObject, IPoweredObject
+    public class ElectricPump : GeneratorObject
     {
         public ElectricPump() : base(
             "Electric Pump", 
@@ -23,6 +23,11 @@ namespace BuildableObjects.Tier2
             return OnWater();
         }
 
+        public int GetPowerConsumption()
+        {
+            return 5;
+        }
+
         public override void Tick()
         {
             if (!GlobalMechanicManager.GetGlobalMechanicManager().GetMechanic<ElectricityMechanic>(GlobalMechanicNames.ELECTRICITY).IsPowered())
@@ -31,11 +36,6 @@ namespace BuildableObjects.Tier2
             }
             GenerateWaterTick();
             MoveWaterTick();
-        }
-
-        public int GetPowerConsumption()
-        {
-            return 5;
         }
     }
 }

@@ -6,12 +6,12 @@ namespace BuildableObjects.Tier1
     {
         public Disinfector() : base(
             "Disinfector", 
-            "Removes common bacteria in water, making it worth 20% more!", 
+            "Removes common bacteria in water, making it worth 10% more!", 
             100, 
             MachineObjectConstants.UpgraderDefaultWaterStorageSize, 
             MachineObjectConstants.UpgraderDefaultWaterMoveRate, 
             1,
-            1.2f
+            1.1f
             )
         {
         }
@@ -23,7 +23,7 @@ namespace BuildableObjects.Tier1
 
         public override void Tick()
         {
-            MoveUpgradedWaterTick();
+            MoveWaterTick(water => water.MultiplyValue(GetMultiplier()));
         }
     }
 }

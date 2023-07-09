@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using UtilClasses;
+﻿using UtilClasses;
 
 namespace BuildableObjects.BaseMachineClasses
 {
-    public abstract class GeneratorObject : MachineObject, ITickableObject
+    public abstract class GeneratorObject : MachineObject
     {
         private readonly int _genValue;
         private int _genAmount;
@@ -15,8 +14,6 @@ namespace BuildableObjects.BaseMachineClasses
             _genValue = genValue;
             _genAmount = genAmount;
         }
-
-        public abstract void Tick();
 
         protected void GenerateWaterTick()
         {

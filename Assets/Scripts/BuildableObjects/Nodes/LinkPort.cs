@@ -62,40 +62,50 @@ namespace BuildableObjects.Nodes
         
         public void OnMouseEnter()
         {
+            Debug.Log("mouse entered");
             if (!_linkableObject.IsBuilt())
             {
+                Debug.Log("obj not built");
                 return;
             }
             PlayerLinking playerLinking = GetLinkableObject().GetPlayer().gameObject.GetComponent<PlayerLinking>();
             if (!_linked)
             {
+                Debug.Log("not linked");
                 if (!playerLinking.IsLinking())
                 {
+                    Debug.Log("player not linking rn");
                     if (this is LinkInput)
                     {
+                        Debug.Log("is linkinput");
                         gameObject.GetComponent<SpriteRenderer>().color = _highlightColour;
                     }
                     return;
                 }
                 if (playerLinking.GetLinkPort() == this)
                 {
+                    Debug.Log("same link port");
                     gameObject.GetComponent<SpriteRenderer>().color = _highlightColour;
                     return;
                 }
                 if (this is LinkOutput && playerLinking.GetLinkPort().GetLinkableObject() != _linkableObject)
                 {
+                    Debug.Log("is link output and not same linkable obj");
                     gameObject.GetComponent<SpriteRenderer>().color = _highlightColour;
                 }
             }
             else 
             {
+                Debug.Log("is linked");
                 if (!playerLinking.IsLinking())
                 {
+                    Debug.Log("player not linking rn");
                     gameObject.GetComponent<SpriteRenderer>().color = _cancelLinkColour;
                     return;
                 }
                 if (this is LinkOutput && playerLinking.GetLinkPort().GetLinkableObject() != _linkableObject)
                 {
+                    Debug.Log("is link output and not same linkable obj");
                     gameObject.GetComponent<SpriteRenderer>().color = _highlightColour;
                 }
             }
@@ -103,6 +113,7 @@ namespace BuildableObjects.Nodes
 
         public void OnMouseExit()
         {
+            Debug.Log("mouse exit");
             if (!_linkableObject.IsBuilt())
             {
                 return;

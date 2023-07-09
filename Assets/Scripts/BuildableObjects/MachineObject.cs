@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BuildableObjects.Nodes;
 using UtilClasses;
 
 namespace BuildableObjects
 {
-    public abstract class MachineObject : LinkableObject
+    public abstract class MachineObject : LinkableObject, ITickableObject
     {
         private int _moveAmount;
         private readonly WaterStorageObject _waterStorageObject;
@@ -63,6 +64,49 @@ namespace BuildableObjects
                 }
             }
         }
+        
+        public void MoveWaterTick(Action<WaterObject> lambda)
+        {
+            if (!_countdownObject.Countdown())
+            {
+                return;
+            }
+            List<LinkInput> inputs = GetInputs();
+            foreach (var input in inputs)
+            { 
+                if (GetWaterStorage().IsEmpty())
+                {
+                    return;
+                }
+                if (input.GetLinkableObject() != this)
+                {
+                    continue;
+                }
+
+                LinkOutput output = GetLinkOutput(input);
+                MachineObject machineObject = output.gameObject.transform.parent.gameObject.GetComponent<MachineObject>();
+                if (machineObject == null)
+                {
+                    return;
+                }
+                if (machineObject.GetWaterStorage().IsFull())
+                {
+                    return;
+                }
+
+                for (int i = 0; i < _moveAmount; i++)
+                {
+                    if (GetWaterStorage().IsEmpty())
+                    {
+                        return;
+                    }
+
+                    WaterObject transferredWater = GetWaterStorage().RemoveWater();
+                    lambda.Invoke(transferredWater);
+                    machineObject.GetWaterStorage().AddWater(transferredWater);
+                }
+            }
+        }
 
         public void OnMouseEnter()
         {
@@ -73,5 +117,7 @@ namespace BuildableObjects
         {
             GetPlayer().GetMachineStatsMenu().DisablePanel();
         }
+
+        public abstract void Tick();
     }
 }

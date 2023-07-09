@@ -11,6 +11,7 @@ namespace BuildableObjects.Nodes
         
         public void OnMouseDown()
         {
+            Debug.Log("mouse down");
             PlayerLinking playerLinking = GetLinkableObject().GetPlayer().gameObject.GetComponent<PlayerLinking>();
             if (IsLinked())
             {
@@ -18,6 +19,7 @@ namespace BuildableObjects.Nodes
                 {
                     return;
                 }
+                Debug.Log("unlinking pair");
                 UnlinkPair();
             }
             else
@@ -25,10 +27,12 @@ namespace BuildableObjects.Nodes
                 if (!playerLinking.IsLinking())
                 {
                     gameObject.GetComponent<SpriteRenderer>().color = GetLinkingColour();
+                    Debug.Log("linking pair");
                     playerLinking.StartLink(this);
                 } else if (playerLinking.GetLinkInput() == this)
                 {
                     gameObject.GetComponent<SpriteRenderer>().color = GetDefaultColour();
+                    Debug.Log("end linking pair");
                     playerLinking.EndLink();
                 }
             }

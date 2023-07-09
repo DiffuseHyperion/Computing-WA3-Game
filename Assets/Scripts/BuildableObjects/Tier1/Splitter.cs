@@ -4,7 +4,7 @@ using UtilClasses;
 
 namespace BuildableObjects.Tier1
 {
-    public class Splitter : MachineObject, ITickableObject
+    public class Splitter : MachineObject
     {
         private readonly CountdownObject _countdownObject;
 
@@ -25,7 +25,7 @@ namespace BuildableObjects.Tier1
             return OnLand();
         }
 
-        public void Tick()
+        public override void Tick()
         {
             if (!_countdownObject.Countdown())
             {

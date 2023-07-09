@@ -1,6 +1,6 @@
 ﻿namespace BuildableObjects.Tier1
 {
-    public class Tank : MachineObject, ITickableObject
+    public class Tank : MachineObject
     {
         public Tank() : base(
             "Tank",
@@ -18,7 +18,7 @@
             return OnLand();
         }
 
-        public void Tick()
+        public override void Tick()
         {
             MoveWaterTick();
         }

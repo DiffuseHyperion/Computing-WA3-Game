@@ -23,7 +23,7 @@ namespace BuildableObjects.Tier1
 
         public override void Tick()
         {
-            MoveUpgradedWaterTick();
+            MoveWaterTick(water => water.IncrementValue(GetBonus()));
         }
     }
 }

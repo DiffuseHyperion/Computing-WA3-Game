@@ -3,11 +3,11 @@ using MechanicScripts;
 
 namespace BuildableObjects.Tier2
 {
-    public class Boiler : AdditiveUpgraderObject, ITickableObject, IPoweredObject
+    public class Freezer : AdditiveUpgraderObject, IPoweredObject
     {
-        public Boiler() : base(
-            "Boiler",
-            "Boils a batch of water for a $20 bonus.\nWater will only be boiled once the boiler is full, and water cannot be reboiled.",
+        public Freezer() : base(
+            "Freezer",
+            "Freezes a batch of water for a $20 bonus.\nWater will only be frozen once the freezer is full, and water cannot be refrozen.",
             150,
             MachineObjectConstants.UpgraderDefaultWaterStorageSize * 5,
             MachineObjectConstants.UpgraderDefaultWaterMoveRate * 5,
@@ -35,18 +35,18 @@ namespace BuildableObjects.Tier2
 
             MoveWaterTick(water =>
             {
-                if (water.ContainTag("Boiled"))
+                if (water.ContainTag("Frozen"))
                 {
                     water.IncrementValue(GetBonus());
                 }
-                water.AddTag("Boiled", GetBonus());
-                water.RemoveTag("Frozen");
+                water.AddTag("Frozen", GetBonus());
+                water.RemoveTag("Boiled");
             });
         }
 
         public int GetPowerConsumption()
         {
             return 10;
-        }
+        } 
     }
 }
