@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace BuildableObjects.Tier1
 {
-    public class Pump : GeneratorObject
+    public class Well : GeneratorObject
     {
-        public Pump() : base(
-            "Pump", 
-            "Pumps up water from the sea.", 
+        public Well() : base(
+            "Well", 
+            "Manually collects water from the ground.", 
             50, 
             MachineObjectConstants.GeneratorDefaultWaterStorageSize, 
             MachineObjectConstants.GeneratorDefaultWaterMoveRate, 

@@ -29,7 +29,7 @@ namespace BuildableObjects.Tier2
 
         public override void Tick()
         {
-            if (_switch.IsTurnedOn())
+            if (!_switch.IsTurnedOn())
             {
                 MoveWaterTick();
             }

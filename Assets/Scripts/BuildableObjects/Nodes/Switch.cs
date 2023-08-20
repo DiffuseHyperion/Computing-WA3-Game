@@ -1,31 +1,35 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
+using UnityEngine;
+using UtilClasses;
 
 namespace BuildableObjects.Nodes
 {
     public class Switch : MonoBehaviour
     {
-        private bool _state;
-        private bool _isDown;
-        private Outline _outline;
-        private void OnMouseDown()
-        {
-            if (_isDown)
-            {
-                return;
-            }
-            _state = true;
-            _isDown = true;
-        }
+        private ToggleableObject _toggleableObject;
+        private Material _material;
 
-        private void OnMouseUp()
+        public void Start()
         {
-            _isDown = false;
+            _toggleableObject = GetComponent<ToggleableObject>();
+            _material = GetComponent<SpriteRenderer>().material;
+            _toggleableObject.AddCallback(() =>
+            {
+                if (_toggleableObject.GetState())
+                {
+                    _material.SetColor(Shader.PropertyToID("_SolidOutline"), Color.red);
+                }
+                else
+                {
+                    _material.SetColor(Shader.PropertyToID("_SolidOutline"), Color.green);
+                }
+                
+            });
         }
 
         public bool IsTurnedOn()
         {
-            return _state;
+            return _toggleableObject.GetState();
         }
     }
 }

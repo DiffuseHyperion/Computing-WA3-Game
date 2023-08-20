@@ -10,6 +10,7 @@ namespace MechanicScripts
         public GlobalMechanicManager()
         {
             _mechanics.Add(GlobalMechanicNames.ELECTRICITY, new ElectricityMechanic());
+            _mechanics.Add(GlobalMechanicNames.RUST, new RustMechanic());
         }
         
         public T GetMechanic<T>(GlobalMechanicNames mechanicName) where T : Mechanic

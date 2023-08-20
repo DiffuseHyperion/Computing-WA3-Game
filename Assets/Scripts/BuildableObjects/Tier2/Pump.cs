@@ -3,11 +3,11 @@ using MechanicScripts;
 
 namespace BuildableObjects.Tier2
 {
-    public class ElectricPump : GeneratorObject
+    public class Pump : GeneratorObject
     {
-        public ElectricPump() : base(
-            "Electric Pump", 
-            "Pumps large amounts of water slowly.", 
+        public Pump() : base(
+            "Pump", 
+            "A faster version of the well.", 
             100, 
             MachineObjectConstants.ExporterDefaultWaterStorageSize * 2, 
             MachineObjectConstants.GeneratorDefaultWaterMoveRate, 
