@@ -1,12 +1,17 @@
 ﻿using BuildableObjects.BaseMachineClasses;
 using MechanicScripts;
+using UtilClasses;
 
 namespace BuildableObjects.Tier2
 {
-    public class Pump : GeneratorObject
+    public class MechanizedWell : GeneratorObject
     {
-        public Pump() : base(
-            "Pump", 
+        private ClickableObject _clickableObject;
+        private readonly int _basecooldown = 5;
+        private int _cooldown;
+        
+        public MechanizedWell() : base(
+            "Mechanized Well", 
             "A faster version of the well.", 
             100, 
             MachineObjectConstants.ExporterDefaultWaterStorageSize * 2, 
@@ -16,6 +21,13 @@ namespace BuildableObjects.Tier2
             5,
             3)
         {
+            _cooldown = _basecooldown;
+        }
+        
+        public void Start()
+        {
+            _clickableObject = GetComponent<ClickableObject>();
+            _clickableObject.AddCallback(OnClick);
         }
 
         public override bool CanBuild()
@@ -34,8 +46,18 @@ namespace BuildableObjects.Tier2
             {
                 return;
             }
-            GenerateWaterTick();
             MoveWaterTick();
+            _cooldown -= 1;
+        }
+
+        private void OnClick()
+        {
+            if (_cooldown >= 0)
+            {
+                return;
+            }
+            GenerateWaterTick();
+            _cooldown = _basecooldown;
         }
     }
 }

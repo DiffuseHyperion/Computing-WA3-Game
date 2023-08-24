@@ -1,10 +1,17 @@
-﻿using BuildableObjects.BaseMachineClasses;
+﻿using System;
+using BuildableObjects.BaseMachineClasses;
 using UnityEngine;
+using UtilClasses;
 
 namespace BuildableObjects.Tier1
 {
     public class Well : GeneratorObject
     {
+
+        private ClickableObject _clickableObject;
+        private readonly int _basecooldown = 5;
+        private int _cooldown;
+        
         public Well() : base(
             "Well", 
             "Manually collects water from the ground.", 
@@ -17,6 +24,13 @@ namespace BuildableObjects.Tier1
             1
             )
         {
+            _cooldown = _basecooldown;
+        }
+
+        public void Start()
+        {
+            _clickableObject = GetComponent<ClickableObject>();
+            _clickableObject.AddCallback(OnClick);
         }
 
         public override bool CanBuild()
@@ -26,8 +40,18 @@ namespace BuildableObjects.Tier1
 
         public override void Tick()
         {
-            GenerateWaterTick();
             MoveWaterTick();
+            _cooldown -= 1;
+        }
+
+        private void OnClick()
+        {
+            if (_cooldown >= 0)
+            {
+                return;
+            }
+            GenerateWaterTick();
+            _cooldown = _basecooldown;
         }
     }
 }

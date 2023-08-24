@@ -1,5 +1,7 @@
-﻿using MechanicScripts;
+﻿using System;
+using MechanicScripts;
 using UnityEngine;
+using UtilClasses;
 
 namespace BuildableObjects.Tier1
 {
@@ -7,6 +9,10 @@ namespace BuildableObjects.Tier1
     {
 
         private bool _powered;
+        private ClickableObject _clickableObject;
+        private GameObject _ringOn;
+        private GameObject _ringOff;
+        
         public ManualDynamo() : base(
             "Manual Dynamo", 
             "Manually generate electricity.", 
@@ -15,12 +21,31 @@ namespace BuildableObjects.Tier1
         {
         }
 
+        public void Start()
+        {
+            _clickableObject = GetComponent<ClickableObject>();
+            _clickableObject.AddCallback(OnPress);
+            
+            foreach (Transform child in transform) {
+                if (child.name == "RingOn")
+                {
+                    _ringOn = child.gameObject;
+                } else if (child.name == "RingOff")
+                {
+                    _ringOff = child.gameObject;
+                }
+            }
+            
+            _ringOn.SetActive(false);
+            _ringOff.SetActive(true);
+        }
+
         public override bool CanBuild()
         {
             return OnLand();
         }
 
-        private void OnMouseDown()
+        private void OnPress()
         {
             if (_powered)
             {
@@ -29,7 +54,8 @@ namespace BuildableObjects.Tier1
 
             _powered = true;
             GlobalMechanicManager.GetGlobalMechanicManager().GetMechanic<ElectricityMechanic>(GlobalMechanicNames.ELECTRICITY).IncreasePowerProduction(5);
-            GetComponent<SpriteRenderer>().color = new Color(0, 0.5f, 0);
+            _ringOn.SetActive(true);
+            _ringOff.SetActive(false);
             Invoke(nameof(PowerDown), 5f);
         }
 
@@ -37,7 +63,8 @@ namespace BuildableObjects.Tier1
         {
             _powered = false;
             GlobalMechanicManager.GetGlobalMechanicManager().GetMechanic<ElectricityMechanic>(GlobalMechanicNames.ELECTRICITY).DecreasePowerProduction(5);
-            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 0.6f);
+            _ringOn.SetActive(false);
+            _ringOff.SetActive(true);
         }
     }
 } 

@@ -64,8 +64,8 @@ namespace BuildableObjects
                 }
             }
         }
-        
-        public void MoveWaterTick(Action<WaterObject> lambda)
+
+        protected void MoveWaterTick(Action<WaterObject> action)
         {
             if (!_countdownObject.Countdown())
             {
@@ -102,7 +102,7 @@ namespace BuildableObjects
                     }
 
                     WaterObject transferredWater = GetWaterStorage().RemoveWater();
-                    lambda.Invoke(transferredWater);
+                    action.Invoke(transferredWater);
                     machineObject.GetWaterStorage().AddWater(transferredWater);
                 }
             }
