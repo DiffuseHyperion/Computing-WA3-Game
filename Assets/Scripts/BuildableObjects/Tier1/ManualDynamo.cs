@@ -40,9 +40,9 @@ namespace BuildableObjects.Tier1
             _ringOff.SetActive(true);
         }
 
-        public override bool CanBuild()
+        public override IBuildCondition GetBuildCondition()
         {
-            return OnLand();
+            return new OnLandBuildCondition();
         }
 
         private void OnPress()

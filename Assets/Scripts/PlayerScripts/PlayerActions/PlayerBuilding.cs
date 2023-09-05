@@ -3,20 +3,20 @@ using BuildableObjects.Nodes;
 using MechanicScripts;
 using PlayerScripts.PlayerBuildMenu;
 using UnityEngine;
+using UtilClasses;
 
 namespace PlayerScripts.PlayerActions
 {
     public class PlayerBuilding : MonoBehaviour
     {
-        [SerializeField] 
-        private GameObject buildingButton;
-        [SerializeField] 
-        private GameObject buildingText;
-        [SerializeField] 
-        private BuildableObjectTicker buildableObjectTicker;
+        [SerializeField] private GameObject buildingButton;
+        [SerializeField] private GameObject buildingText;
+        [SerializeField] private BuildableObjectTicker buildableObjectTicker;
+        [SerializeField] private float buildDelay;
+        [SerializeField] private TemporaryBuildableObject temporaryBuildableObjectPrefab;
         
-        private GameObject _placementGameObject;
-        private BuildableObject _placementBuildableObject;
+        private TemporaryBuildableObject _temporaryBuildableObject;
+        private BuildableObject _referenceBuildableObject;
         private Player _player;
         private bool _building;
         private bool _progressing;
@@ -38,24 +38,23 @@ namespace PlayerScripts.PlayerActions
                 return;
             }
 
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 mousePos = _player.gameObject.GetComponentInChildren<Camera>().ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = -1;
-            _placementGameObject.transform.position = mousePos;
+            _temporaryBuildableObject.transform.position = mousePos;
             if (Input.GetKey(KeyCode.R))
             {
-                _placementGameObject.transform.Rotate(Vector3.back, 0.25f);
+                _temporaryBuildableObject.transform.Rotate(Vector3.back, 0.25f);
             }
             
-            
-            if (_placementBuildableObject.CanBuild()) {
-                _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.3f);
+            if (_referenceBuildableObject.GetBuildCondition().IsBuildable(_player)) {
+                _temporaryBuildableObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.3f);
                 if (Input.GetMouseButtonDown(0) && _delay <= 0) {
                     ConfirmBuildObject();
                     return;
                 }
             }
             else {
-                _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 0f, 0f, 0.3f);
+                _temporaryBuildableObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 0f, 0f, 0.3f);
             }
             
             if (Input.GetMouseButtonDown(1)) {
@@ -71,9 +70,8 @@ namespace PlayerScripts.PlayerActions
 
         public void CancelBuildObject()
         {
-            Destroy(_placementGameObject);
-            _placementGameObject = null;
-            _placementBuildableObject = null;
+            Destroy(_temporaryBuildableObject.gameObject);
+            _temporaryBuildableObject = null;
             buildingButton.SetActive(true);
             buildingText.SetActive(false);
             _player.GetComponent<PlayerLinking>().ResetCooldown();
@@ -92,38 +90,32 @@ namespace PlayerScripts.PlayerActions
             }
             
             // update relevant components
-            ITickableObject tickableObject = _placementGameObject.GetComponent<ITickableObject>();
+            ITickableObject tickableObject = _referenceBuildableObject.GetComponent<ITickableObject>();
             if (tickableObject != null)
             {
                 buildableObjectTicker.AddTickableObject(tickableObject);
             }
-            IPoweredObject poweredObject = _placementGameObject.GetComponent<IPoweredObject>();
+            IPoweredObject poweredObject = _referenceBuildableObject.GetComponent<IPoweredObject>();
             if (poweredObject != null)
             {
                 GlobalMechanicManager.GetGlobalMechanicManager().GetMechanic<ElectricityMechanic>(GlobalMechanicNames.ELECTRICITY).IncreasePowerConsumption(poweredObject.GetPowerConsumption());
             }
             
             // deduct cash
-            _player.GetComponent<PlayerMoney>().SetMoney(_player.GetComponent<PlayerMoney>().GetMoney() - _placementBuildableObject.GetCost());
-            
-            // enable colliders
-            _placementGameObject.GetComponent<Collider2D>().enabled = true;
-            foreach (var linkPort in _placementGameObject.GetComponentsInChildren<LinkPort>())
-            {
-                linkPort.gameObject.GetComponent<Collider2D>().enabled = true;
-            }
+            _player.GetComponent<PlayerMoney>().SetMoney(_player.GetComponent<PlayerMoney>().GetMoney() - _referenceBuildableObject.GetCost());
             
             // toggle menus
             buildingButton.SetActive(true);
             buildingText.SetActive(false);
             
-            // change object states
-            _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-            _placementBuildableObject.SetBuilt(true);
-            
             _player.GetComponent<PlayerLinking>().ResetCooldown();
             _building = false;
             _progressing = false;
+
+            _temporaryBuildableObject.ConfirmBuild().OnBuild();
+            Destroy(_temporaryBuildableObject.gameObject);
+            
+            
         }
 
         public void CreateObject(BuildableObject buildableObject, bool progressMechanic)
@@ -147,24 +139,15 @@ namespace PlayerScripts.PlayerActions
             buildingText.SetActive(true);
             
             // init fields
-            _placementGameObject = Instantiate(buildableObject.gameObject);
-            _placementBuildableObject = _placementGameObject.GetComponent<BuildableObject>();
+            _temporaryBuildableObject = Instantiate(temporaryBuildableObjectPrefab);
+            _referenceBuildableObject = buildableObject;
             
-            // init values within fields
-            _placementBuildableObject.SetOwner(_player);
-            
-            // disable colliders in object
-            _placementGameObject.GetComponent<Collider2D>().enabled = false;
-            _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.3f);
-            foreach (var linkPort in _placementGameObject.GetComponentsInChildren<LinkPort>())
-            {
-                linkPort.gameObject.GetComponent<Collider2D>().enabled = false;
-            }
-
             // init variables for loop
-            _delay = 0.1f;
+            _delay = buildDelay;
             _building = true;
             _progressing = progressMechanic;
+
+            _temporaryBuildableObject.Init(_referenceBuildableObject, _player);
         }
     }
 }

@@ -30,9 +30,9 @@ namespace BuildableObjects.Tier2
             _clickableObject.AddCallback(OnClick);
         }
 
-        public override bool CanBuild()
+        public override IBuildCondition GetBuildCondition()
         {
-            return OnWater();
+            return new OnWaterBuildCondition();
         }
 
         public int GetPowerConsumption()

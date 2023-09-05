@@ -25,9 +25,9 @@ namespace BuildableObjects.Tier2
             _countdownObject = new CountdownObject(3);
         }
 
-        public override bool CanBuild()
+        public override IBuildCondition GetBuildCondition()
         {
-            return OnWater();
+            return new OnWaterBuildCondition();
         }
 
         public override void Tick()

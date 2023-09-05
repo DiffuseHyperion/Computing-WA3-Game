@@ -20,9 +20,9 @@ namespace BuildableObjects.Tier1
             _countdownObject = new CountdownObject(1); // should be same as moverate, lazy to make constant field lol
         }
 
-        public override bool CanBuild()
+        public override IBuildCondition GetBuildCondition()
         {
-            return OnLand();
+            return new OnLandBuildCondition();
         }
 
         public override void Tick()

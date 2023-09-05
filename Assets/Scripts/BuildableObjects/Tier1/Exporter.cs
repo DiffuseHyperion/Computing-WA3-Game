@@ -16,10 +16,10 @@ namespace BuildableObjects.Tier1
             1f)
         {
         }
-
-        public override bool CanBuild()
+        
+        public override IBuildCondition GetBuildCondition()
         {
-            return OnLand();
+            return new OnLandBuildCondition();
         }
 
         public override void Tick()

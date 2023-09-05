@@ -2,11 +2,11 @@
 
 namespace BuildableObjects.Tier1
 {
-    public class Disinfector : MultiplicativeUpgraderObject
+    public class Strainer : MultiplicativeUpgraderObject
     {
-        public Disinfector() : base(
-            "Disinfector", 
-            "Removes common bacteria in water, making it worth 10% more!", 
+        public Strainer() : base(
+            "Strainer", 
+            "Removes debris in the water, making it worth 10% more!\nNeeds to be emptied periodically.", 
             100, 
             MachineObjectConstants.UpgraderDefaultWaterStorageSize, 
             MachineObjectConstants.UpgraderDefaultWaterMoveRate, 
@@ -16,9 +16,9 @@ namespace BuildableObjects.Tier1
         {
         }
 
-        public override bool CanBuild()
+        public override IBuildCondition GetBuildCondition()
         {
-            return OnLand();
+            return new OnLandBuildCondition();
         }
 
         public override void Tick()

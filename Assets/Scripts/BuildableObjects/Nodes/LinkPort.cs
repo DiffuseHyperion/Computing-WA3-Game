@@ -62,10 +62,6 @@ namespace BuildableObjects.Nodes
         
         public void OnMouseEnter()
         {
-            if (!_linkableObject.IsBuilt())
-            {
-                return;
-            }
             PlayerLinking playerLinking = GetLinkableObject().GetPlayer().gameObject.GetComponent<PlayerLinking>();
             if (!_linked)
             {
@@ -103,10 +99,6 @@ namespace BuildableObjects.Nodes
 
         public void OnMouseExit()
         {
-            if (!_linkableObject.IsBuilt())
-            {
-                return;
-            }
             PlayerLinking playerLinking = GetLinkableObject().GetPlayer().gameObject.GetComponent<PlayerLinking>();
             if (!_linked)
             {

@@ -33,9 +33,9 @@ namespace BuildableObjects.Tier1
             _clickableObject.AddCallback(OnClick);
         }
 
-        public override bool CanBuild()
+        public override IBuildCondition GetBuildCondition()
         {
-            return OnWater();
+            return new OnWaterBuildCondition();
         }
 
         public override void Tick()

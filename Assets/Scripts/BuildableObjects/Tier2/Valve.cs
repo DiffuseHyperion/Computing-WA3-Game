@@ -21,10 +21,10 @@ namespace BuildableObjects.Tier2
         {
             _switch = GetComponentInChildren<Switch>();
         }
-
-        public override bool CanBuild()
+        
+        public override IBuildCondition GetBuildCondition()
         {
-            return OnLand();
+            return new OnLandBuildCondition();
         }
 
         public override void Tick()
