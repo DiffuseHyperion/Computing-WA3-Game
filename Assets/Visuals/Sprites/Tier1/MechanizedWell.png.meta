@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cbaa743720516734fbda00db76a3399d
+guid: 9eb2cd892809c3349a6b07b1e56d8780
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Well_1
+      name: MechanizedWell_1
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 61bf809eb375e444f97fc8a166b07953
-      internalID: -1878490496
+      spriteID: 13ef9c6dbba33d04cb5b6a0b2fd4e80b
+      internalID: -270496136
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Well_2
+      name: MechanizedWell_2
       rect:
         serializedVersion: 2
         x: 64
@@ -158,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3f75188a9d5ed1409ad91d2068baed7
-      internalID: 909000491
+      spriteID: 53ef706aeaa4ef843a53943aff878e94
+      internalID: -899071089
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Well_3
+      name: MechanizedWell_3
       rect:
         serializedVersion: 2
         x: 0
@@ -179,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0abc5e8c5b362474ab22d3d0884d3e61
-      internalID: -493086041
+      spriteID: e76342949794e3a43a1cd4a4aabd3058
+      internalID: 1857064538
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Well_4
+      name: MechanizedWell_4
       rect:
         serializedVersion: 2
         x: 64
@@ -200,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a1b20cc18a4e4a4689a7ccb85a2cd91
-      internalID: 326256185
+      spriteID: 30b3cb3af386b8f459087e476c441b34
+      internalID: 867767055
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Well_5
+      name: MechanizedWell_5
       rect:
         serializedVersion: 2
         x: 0
@@ -221,8 +221,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b1d6ad26e94794c4fa86f6bc6e245d93
-      internalID: -459199716
+      spriteID: 4d2ec5fbee98ce14e8ff31ca79277087
+      internalID: -1740742869
       vertices: []
       indices: 
       edges: []
@@ -238,11 +238,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Well_1: -1878490496
-      Well_2: 909000491
-      Well_3: -493086041
-      Well_4: 326256185
-      Well_5: -459199716
+      MechanizedWell_1: -270496136
+      MechanizedWell_2: -899071089
+      MechanizedWell_3: 1857064538
+      MechanizedWell_4: 867767055
+      MechanizedWell_5: -1740742869
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

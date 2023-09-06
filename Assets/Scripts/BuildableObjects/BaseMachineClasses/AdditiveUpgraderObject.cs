@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using BuildableObjects.Nodes;
-using UtilClasses;
-
-namespace BuildableObjects.BaseMachineClasses
+﻿namespace BuildableObjects.BaseMachineClasses
 {
     public abstract class AdditiveUpgraderObject : UpgraderObject
     {

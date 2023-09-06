@@ -1,5 +1,4 @@
-﻿using MechanicScripts;
-using PlayerScripts.PlayerUI;
+﻿using PlayerScripts.PlayerUI;
 using TMPro;
 using UnityEngine;
 

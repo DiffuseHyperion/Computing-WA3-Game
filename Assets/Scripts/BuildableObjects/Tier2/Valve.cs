@@ -1,5 +1,4 @@
 ﻿using BuildableObjects.Nodes;
-using UnityEngine;
 
 namespace BuildableObjects.Tier2
 {

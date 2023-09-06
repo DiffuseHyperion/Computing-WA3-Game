@@ -51,6 +51,11 @@ namespace UtilClasses
             return _tags.Remove(tag);
         }
 
+        public void ClearTags()
+        {
+            _tags.Clear();
+        }
+
         public object GetTagValue(string tag)
         {
             return _tags[tag];

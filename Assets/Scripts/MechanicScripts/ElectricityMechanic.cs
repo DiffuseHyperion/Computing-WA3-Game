@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using PlayerScripts;
+﻿using PlayerScripts;
 using PlayerScripts.PlayerUI;
 
 namespace MechanicScripts

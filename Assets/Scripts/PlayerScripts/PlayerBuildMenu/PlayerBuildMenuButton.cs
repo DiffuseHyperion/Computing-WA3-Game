@@ -17,6 +17,7 @@ namespace PlayerScripts.PlayerBuildMenu
         
         private PlayerBuildMenu _menu;
         private BuildableObject _currentBuildableObject;
+        private PlayerBuildMenuButtonPreview _preview;
         private int _currentIndex;
         private Button _button;
 
@@ -24,9 +25,10 @@ namespace PlayerScripts.PlayerBuildMenu
         {
             _menu = GetComponentInParent<PlayerBuildMenu>();
             _button = gameObject.GetComponent<Button>();
+            _preview = gameObject.GetComponentInChildren<PlayerBuildMenuButtonPreview>();
             _currentBuildableObject = buildableObjects[_currentIndex];
             
-            _button.GetComponentInChildren<TextMeshProUGUI>().text = _currentBuildableObject.GetName();
+            UpdateButton();
         }
 
         public void OnClick()
@@ -53,9 +55,7 @@ namespace PlayerScripts.PlayerBuildMenu
             }
             _currentBuildableObject = buildableObjects[_currentIndex];
             
-            
-            _button.GetComponentInChildren<TextMeshProUGUI>().text = _currentBuildableObject.GetName();
-            _menu.GetDescriptionUI().UpdatePanel(_currentBuildableObject);
+            UpdateButton();
         }
 
         public void RotateLeft()
@@ -67,9 +67,14 @@ namespace PlayerScripts.PlayerBuildMenu
             }
             _currentBuildableObject = buildableObjects[_currentIndex];
             
-            
+            UpdateButton();
+        }
+
+        private void UpdateButton()
+        {
             _button.GetComponentInChildren<TextMeshProUGUI>().text = _currentBuildableObject.GetName();
             _menu.GetDescriptionUI().UpdatePanel(_currentBuildableObject);
+            _preview.SetPreview(_currentBuildableObject);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using MechanicScripts;
+﻿using MechanicScripts;
 using UtilClasses;
 
 namespace BuildableObjects.Tier2

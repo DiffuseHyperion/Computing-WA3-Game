@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using PlayerScripts.PlayerActions;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace PlayerScripts.PlayerBuildMenu
 {

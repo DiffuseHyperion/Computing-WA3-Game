@@ -1,18 +1,17 @@
-﻿using BuildableObjects.BaseMachineClasses;
-using MechanicScripts;
+﻿using MechanicScripts;
 
 namespace BuildableObjects.Tier2
 {
-    public class Purifier : MultiplicativeUpgraderObject, IPoweredObject
+    public class Purifier : MachineObject, IPoweredObject
     {
         public Purifier() : base(
             "Purifier",
-            "Slowly removes bacteria using heavy UV rays for a 20% boost!",
+            "Removes all tags from water, as if they were never touched before.",
             300,
             MachineObjectConstants.UpgraderDefaultWaterStorageSize,
-            MachineObjectConstants.UpgraderDefaultWaterMoveRate * 3,
+            MachineObjectConstants.UpgraderDefaultWaterMoveRate,
             1,
-            1.2f)
+            BuildableObjectTypes.Misc)
         {
         }
 
@@ -23,7 +22,14 @@ namespace BuildableObjects.Tier2
 
         public override void Tick()
         {
-            MoveWaterTick(water => water.MultiplyValue(GetMultiplier()));
+            MoveWaterTick(water =>
+                {
+                    if (!water.ContainTag("Purified"))
+                    {
+                        water.ClearTags();
+                        water.AddTag("Purified", true);
+                    }
+                });
         }
 
         public int GetPowerConsumption()
