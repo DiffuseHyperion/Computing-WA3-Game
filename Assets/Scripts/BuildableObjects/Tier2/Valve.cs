@@ -1,9 +1,15 @@
-﻿using BuildableObjects.Nodes;
+﻿using System.Collections.Generic;
+using BuildableObjects.Nodes;
+using UnityEngine;
 
 namespace BuildableObjects.Tier2
 {
     public class Valve : MachineObject
     {
+        [SerializeField] private List<Sprite> sprites;
+        private SpriteRenderer _renderer;
+        private bool _powered;
+        
         private Switch _switch;
         public Valve() : base(
             "Valve", 
@@ -19,6 +25,21 @@ namespace BuildableObjects.Tier2
         void Start()
         {
             _switch = GetComponentInChildren<Switch>();
+            _renderer = GetComponent<SpriteRenderer>();
+            _switch.AddOnClickCallback(OnClick);
+        }
+        
+        private void UpdateSprite(bool currentlyPowered)
+        {
+            if (currentlyPowered && !_powered)
+            {
+                _powered = true;
+                _renderer.sprite = sprites[0];
+            } else if (!currentlyPowered && _powered)
+            {
+                _powered = false;
+                _renderer.sprite = sprites[1];
+            }
         }
 
         public override bool CanBuild()
@@ -26,9 +47,14 @@ namespace BuildableObjects.Tier2
             return OnLand();
         }
 
+        private void OnClick()
+        {
+            UpdateSprite(_switch.IsTurnedOn());
+        }
+
         public override void Tick()
         {
-            if (!_switch.IsTurnedOn())
+            if (_switch.IsTurnedOn())
             {
                 MoveWaterTick();
             }
