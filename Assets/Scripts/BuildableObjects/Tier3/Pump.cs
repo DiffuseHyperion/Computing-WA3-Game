@@ -1,5 +1,6 @@
 ﻿using BuildableObjects.BaseMachineClasses;
 using PlayerScripts;
+using UnityEngine;
 using UtilClasses;
 
 namespace BuildableObjects.Tier3
@@ -7,9 +8,8 @@ namespace BuildableObjects.Tier3
     public class Pump : GeneratorObject
     {
         private ClickableObject _clickableObject;
-        private readonly int _basecooldown = 5;
         
-        public Pump() : base(
+         public Pump() : base(
             "Pump", 
             "Collects water from the ground.", 
             50, 
@@ -27,6 +27,7 @@ namespace BuildableObjects.Tier3
         {
             GenerateWaterTick();
             MoveWaterTick();
+            Debug.Log("stored water: " + GetWaterStorage().GetCount());
         }
 
         public override IBuildCondition GetBuildCondition()

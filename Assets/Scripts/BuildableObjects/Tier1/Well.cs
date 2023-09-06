@@ -1,5 +1,4 @@
-﻿using System;
-using BuildableObjects.BaseMachineClasses;
+﻿using BuildableObjects.BaseMachineClasses;
 using UnityEngine;
 using UtilClasses;
 
@@ -9,8 +8,8 @@ namespace BuildableObjects.Tier1
     {
 
         private ClickableObject _clickableObject;
-        private readonly int _basecooldown = 5;
-        private int _cooldown;
+        private readonly float _baseCooldown = 5f;
+        private float _cooldown;
         
         public Well() : base(
             "Well", 
@@ -24,13 +23,21 @@ namespace BuildableObjects.Tier1
             1
             )
         {
-            _cooldown = _basecooldown;
         }
 
         public void Start()
         {
             _clickableObject = GetComponent<ClickableObject>();
             _clickableObject.AddCallback(OnClick);
+            _cooldown = 0f;
+        }
+
+        public void Update()
+        {
+            // normally i would have reduced cooldown in Tick() method, but faced some "quantum entanglement" issues
+            // _cooldown variable here would be completely detached from the _cooldown variable in OnClick()
+            // the variable persisted through play sessions and is shared with all objects
+            _cooldown -= Time.deltaTime;
         }
 
         public override IBuildCondition GetBuildCondition()
@@ -41,17 +48,16 @@ namespace BuildableObjects.Tier1
         public override void Tick()
         {
             MoveWaterTick();
-            _cooldown -= 1;
         }
 
         private void OnClick()
         {
-            if (_cooldown >= 0)
+            if (_cooldown >= 0f)
             {
                 return;
             }
             GenerateWaterTick();
-            _cooldown = _basecooldown;
+            _cooldown = _baseCooldown;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace UtilClasses
 {
@@ -39,6 +40,7 @@ namespace UtilClasses
         public void AddTag(string tag, object value)
         {
             _tags.Add(tag, value);
+            Debug.Log(_tags);
         }
 
         public void RemoveTag(string tag)

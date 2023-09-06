@@ -278,6 +278,7 @@ GameObject:
   - component: {fileID: 7710516256359061870}
   - component: {fileID: 4334419532093772907}
   - component: {fileID: 4402965361151800245}
+  - component: {fileID: 8837600786165494379}
   m_Layer: 0
   m_Name: Strainer
   m_TagString: Untagged
@@ -300,7 +301,7 @@ Transform:
   - {fileID: 3591920083798691868}
   - {fileID: 2448821179351371451}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7710516256359061870
 SpriteRenderer:
@@ -343,11 +344,11 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -5177388603050735206, guid: 8884154dfe85442a3a3578be807dbcdf, type: 3}
+  m_Sprite: {fileID: 1392237811, guid: 8793ef7c7c3d4334ca952b494d8f61dd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 2
+  m_DrawMode: 1
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -366,6 +367,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2613d438ba354e70963d004f5df92ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 1392237811, guid: 8793ef7c7c3d4334ca952b494d8f61dd, type: 3}
+  - {fileID: -1066156944, guid: 8793ef7c7c3d4334ca952b494d8f61dd, type: 3}
+  - {fileID: -804285076, guid: 8793ef7c7c3d4334ca952b494d8f61dd, type: 3}
+  - {fileID: 575786966, guid: 8793ef7c7c3d4334ca952b494d8f61dd, type: 3}
+  - {fileID: -169524327, guid: 8793ef7c7c3d4334ca952b494d8f61dd, type: 3}
+  maxUses: 30
 --- !u!61 &4402965361151800245
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -400,14 +408,26 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0.25, y: 0.25, z: 0.25, w: 0.25}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
-    drawMode: 2
+    drawMode: 1
     adaptiveTiling: 0
   m_AutoTiling: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8837600786165494379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2907165267529290098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d08c2c0863384bcf9fd180084db29c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

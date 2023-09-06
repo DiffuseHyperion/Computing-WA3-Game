@@ -42,6 +42,7 @@ namespace PlayerScripts.PlayerActions
 
         public void UpdatePanelText()
         {
+            Debug.Log("for machine " + _machineObject.name + ", water storage count: " + _machineObject.GetWaterStorage().GetCount());
             _stats.GetComponentInChildren<TextMeshProUGUI>().text = "Total Stored: " + _machineObject.GetWaterStorage().GetCount() + "L / " + _machineObject.GetWaterStorage().GetMax() + "L\nTotal Value: $" + _machineObject.GetWaterStorage().GetTotalValue();
         }
         

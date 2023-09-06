@@ -14,7 +14,19 @@ namespace UtilClasses
             _buildableObject = buildableObject;
             _player = player;
             gameObject.name = buildableObject.name;
-            GetComponent<SpriteRenderer>().sprite = buildableObject.GetComponent<SpriteRenderer>().sprite;
+            
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = buildableObject.GetComponent<SpriteRenderer>().sprite;
+            if (buildableObject.GetComponent<SpriteRenderer>().drawMode == SpriteDrawMode.Sliced)
+            {
+                spriteRenderer.drawMode = SpriteDrawMode.Sliced;
+                spriteRenderer.size = new Vector2(1, 1);
+            }
+            else
+            {
+                spriteRenderer.drawMode = SpriteDrawMode.Simple;
+            }
+            
             transform.rotation = buildableObject.transform.rotation;
             foreach (Transform childernTransform in buildableObject.transform)
             {

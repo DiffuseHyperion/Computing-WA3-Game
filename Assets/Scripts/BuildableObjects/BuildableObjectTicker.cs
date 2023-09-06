@@ -5,7 +5,7 @@ namespace BuildableObjects
 {
     public class BuildableObjectTicker : MonoBehaviour
     {
-        private List<ITickableObject> _tickableObjects = new();
+        private readonly List<ITickableObject> _tickableObjects = new();
         void Start () {
             InvokeRepeating("Tick", 1f, 1f);  //1s delay, repeat every 1s
         }

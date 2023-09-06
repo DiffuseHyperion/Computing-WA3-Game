@@ -14,12 +14,12 @@ namespace BuildableObjects.Tier1
         private ClickableObject _clickableObject;
         private SpriteRenderer _renderer;
         private bool _fueled;
-        private float _fueledTime;
+        private int _fueledTime;
         private int _fuelStage;
         
         public Campfire() : base(
             "Campfire", 
-            "Boils impurities within the water, giving a $10 bonus./nNeeds to be refuelled periodically.", 
+            "Boils impurities within the water, giving a $10 bonus.\nNeeds to be refuelled periodically.", 
             100, 
             MachineObjectConstants.UpgraderDefaultWaterStorageSize, 
             MachineObjectConstants.UpgraderDefaultWaterMoveRate,
@@ -29,41 +29,17 @@ namespace BuildableObjects.Tier1
         {
         }
 
-        public override void OnBuild()
+        public void Start()
         {
             _clickableObject = GetComponent<ClickableObject>();
             _renderer = GetComponent<SpriteRenderer>();
             _clickableObject.AddCallback(OnClick);
             _quarterMaxFueledTime = maxFueledTime / 4f;
-            Refuel();
         }
 
-        private void Update()
+        public override void OnBuild()
         {
-            _fueledTime -= Time.deltaTime;
-            if (_fueledTime <= _quarterMaxFueledTime * 3 && _fueledTime > _quarterMaxFueledTime * 2 && _fuelStage != 2)
-            {
-                Debug.Log("regressing to 2");
-                _fuelStage = 2;
-                UpdateSprite();
-            } else if (_fueledTime <= _quarterMaxFueledTime * 2 && _fueledTime > _quarterMaxFueledTime && _fuelStage != 3)
-            {
-                Debug.Log("regressing to 3");
-                _fuelStage = 3;
-                UpdateSprite();
-            } else if (_fueledTime <= _quarterMaxFueledTime && _fueledTime > 0f && _fuelStage != 4)
-            {
-                Debug.Log("regressing to 4");
-                _fuelStage = 4;
-                UpdateSprite();
-            }
-            else if (_fueledTime <= 0f && _fuelStage != 5)
-            {
-                Debug.Log("regressing to 5");
-                _fuelStage = 5;
-                UpdateSprite();
-                _fueled = false;
-            }
+            Refuel();
         }
 
         private void OnClick()
@@ -89,13 +65,55 @@ namespace BuildableObjects.Tier1
             return new OnLandBuildCondition();
         }
 
+        private void TickFuel()
+        {
+            _fueledTime -= 1;
+            if (_fueledTime <= _quarterMaxFueledTime * 3 && _fueledTime > _quarterMaxFueledTime * 2 && _fuelStage != 2)
+            {
+                _fuelStage = 2;
+                UpdateSprite();
+            } else if (_fueledTime <= _quarterMaxFueledTime * 2 && _fueledTime > _quarterMaxFueledTime && _fuelStage != 3)
+            {
+                _fuelStage = 3;
+                UpdateSprite();
+            } else if (_fueledTime <= _quarterMaxFueledTime && _fueledTime > 0f && _fuelStage != 4)
+            {
+                _fuelStage = 4;
+                UpdateSprite();
+            }
+            else if (_fueledTime <= 0f && _fuelStage != 5)
+            {
+                _fuelStage = 5;
+                UpdateSprite();
+                _fueled = false;
+            }
+        }
+
         public override void Tick()
         {
+            TickFuel();
             if (!_fueled)
             {
                 return;
             }
-            MoveWaterTick(water => water.IncrementValue(GetBonus()));
+            MoveWaterTick(water =>
+            {
+                int campfiredCount;
+                if (water.ContainTag("Campfire"))
+                {
+                    campfiredCount = (int) water.GetTagValue("Campfire");
+                }
+                else
+                {
+                    campfiredCount = 0;
+                }
+
+                if (campfiredCount < 3)
+                {
+                    water.AddTag("Campfire", campfiredCount + 1);
+                    water.IncrementValue(GetBonus());
+                }
+            });
         }
     }
 }
