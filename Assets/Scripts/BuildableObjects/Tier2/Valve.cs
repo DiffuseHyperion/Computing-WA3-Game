@@ -14,7 +14,7 @@ namespace BuildableObjects.Tier2
         public Valve() : base(
             "Valve", 
             "Allows you to shut off the flow of water.", 
-            100, 
+            50, 
             1,
             1,
             1,

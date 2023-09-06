@@ -10,7 +10,7 @@ namespace BuildableObjects.Tier2
         public CatTrophy() : base(
             "Cat Trophy", 
             "Meows when clicked...", 
-            500,
+            300,
             BuildableObjectTypes.Misc)
         {
         }

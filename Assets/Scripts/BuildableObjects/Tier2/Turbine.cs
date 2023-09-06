@@ -15,7 +15,7 @@ namespace BuildableObjects.Tier2
         public Turbine() : base(
             "Turbine",
             "Generates electricity using water.",
-            300,
+            200,
             5,
             1,
             1,

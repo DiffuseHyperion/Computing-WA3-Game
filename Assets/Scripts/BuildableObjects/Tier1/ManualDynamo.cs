@@ -15,7 +15,7 @@ namespace BuildableObjects.Tier1
         public ManualDynamo() : base(
             "Manual Dynamo", 
             "Manually generate electricity.", 
-            500, 
+            200, 
             BuildableObjectTypes.Misc)
         {
         }

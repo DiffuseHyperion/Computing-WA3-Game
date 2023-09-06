@@ -20,7 +20,7 @@ namespace BuildableObjects.Tier2
         public MechanizedWell() : base(
             "Mechanized Well", 
             "A much faster version of the well.", 
-            50, 
+            100, 
             MachineObjectConstants.GeneratorDefaultWaterStorageSize, 
             MachineObjectConstants.GeneratorDefaultWaterMoveRate, 
             1,

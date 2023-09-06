@@ -12,7 +12,7 @@ namespace BuildableObjects.Tier2
         public Purifier() : base(
             "Purifier",
             "Removes all tags from water, as if they were never touched before.",
-            300,
+            200,
             MachineObjectConstants.UpgraderDefaultWaterStorageSize,
             MachineObjectConstants.UpgraderDefaultWaterMoveRate,
             1,
