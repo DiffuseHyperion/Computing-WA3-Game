@@ -25,6 +25,10 @@ namespace BuildableObjects
 
         public abstract bool CanBuild();
 
+        public virtual void OnBuild()
+        {
+        }
+
         public bool OnWater()
         {
             _camera = _owner.gameObject.GetComponentInChildren<Camera>();

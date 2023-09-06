@@ -120,6 +120,7 @@ namespace PlayerScripts.PlayerActions
             // change object states
             _placementGameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
             _placementBuildableObject.SetBuilt(true);
+            _placementBuildableObject.OnBuild();
             
             _player.GetComponent<PlayerLinking>().ResetCooldown();
             _building = false;
