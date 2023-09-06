@@ -4,14 +4,25 @@ namespace PlayerScripts.PlayerActions
 {
     public class PlayerSoundManager : MonoBehaviour
     {
-        [SerializeField]
-        private AudioSource audioSource;
+        private AudioSource _audioSource;
         [SerializeField]
         private AudioClip errorSoundClip;
+        [SerializeField] 
+        private AudioClip meowSoundClip;
+
+        private void Start()
+        {
+            _audioSource = GetComponentInChildren<PlayerCamera>().GetComponent<AudioSource>();
+        }
 
         public void PlayErrorSound()
         {
-            audioSource.PlayOneShot(errorSoundClip);
+            _audioSource.PlayOneShot(errorSoundClip);
+        }
+        
+        public void PlayMeowSound()
+        {
+            _audioSource.PlayOneShot(meowSoundClip);
         }
     }
 }

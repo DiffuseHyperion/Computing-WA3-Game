@@ -7,7 +7,7 @@ namespace BuildableObjects.Tier2
     {
         public ElectricExporter() : base(
             "Electric Exporter", 
-            "Sell big chunks water off slowly.", 
+            "Sell big chunks of water off slowly.", 
             50, 
             MachineObjectConstants.ExporterDefaultWaterStorageSize * 2, 
             MachineObjectConstants.ExporterDefaultWaterMoveRate, 
