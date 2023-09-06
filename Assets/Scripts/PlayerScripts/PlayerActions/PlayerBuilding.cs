@@ -121,6 +121,7 @@ namespace PlayerScripts.PlayerActions
             _placementBuildableObject.SetBuilt(true);
             _placementBuildableObject.OnBuild();
             
+            _player.GetComponent<PlayerSoundManager>().PlayPlacedBuildingSound();
             _player.GetComponent<PlayerLinking>().ResetCooldown();
             _building = false;
             _progressing = false;

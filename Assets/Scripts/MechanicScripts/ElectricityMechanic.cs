@@ -1,4 +1,5 @@
 ﻿using PlayerScripts;
+using PlayerScripts.PlayerActions;
 using PlayerScripts.PlayerUI;
 
 namespace MechanicScripts
@@ -7,6 +8,7 @@ namespace MechanicScripts
     {
         private int _electricityProduction;
         private int _electricityConsumption;
+        private bool _lastPowerState;
 
         public ElectricityMechanic() : base(GlobalMechanicNames.ELECTRICITY, PlayerUIBarNames.ELECTRICITY)
         {
@@ -17,12 +19,14 @@ namespace MechanicScripts
             _electricityProduction += increase;
             UpdatePlayerBars();
             UpdateTextColour();
+            UpdatePowered();
         }
         public void DecreasePowerProduction(int decrease)
         {
             _electricityProduction -= decrease;
             UpdatePlayerBars();
             UpdateTextColour();
+            UpdatePowered();
         }
         
         public void IncreasePowerConsumption(int increase)
@@ -30,12 +34,14 @@ namespace MechanicScripts
             _electricityConsumption += increase;
             UpdatePlayerBars();
             UpdateTextColour();
+            UpdatePowered();
         }
         public void DecreasePowerConsumption(int decrease)
         {
             _electricityConsumption -= decrease;
             UpdatePlayerBars();
             UpdateTextColour();
+            UpdatePowered();
         }
 
         private void UpdatePlayerBars()
@@ -61,6 +67,25 @@ namespace MechanicScripts
             foreach (var player in Player.GetAllPlayers())
             {
                 player.GetUIMenu().GetBar<PlayerUIBar>(PlayerUIBarNames.ELECTRICITY).GetText().color = colour;
+            }
+        }
+
+        private void UpdatePowered()
+        {
+            if (IsPowered() && !_lastPowerState)
+            {
+                _lastPowerState = true;
+                foreach (var player in Player.GetAllPlayers())
+                {
+                    player.GetComponent<PlayerSoundManager>().PlayPowerUpSound();
+                }
+            } else if (!IsPowered() && _lastPowerState)
+            {
+                _lastPowerState = false;
+                foreach (var player in Player.GetAllPlayers())
+                {
+                    player.GetComponent<PlayerSoundManager>().PlayPowerDownSound();
+                }
             }
         }
 

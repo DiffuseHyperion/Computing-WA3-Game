@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BuildableObjects.BaseMachineClasses;
+using PlayerScripts.PlayerActions;
 using UnityEngine;
 using UtilClasses;
 
@@ -43,6 +44,7 @@ namespace BuildableObjects.Tier1
 
         private void OnClick()
         {
+            GetPlayer().GetComponent<PlayerSoundManager>().PlayBrushSound();
             Clean();
         }
 

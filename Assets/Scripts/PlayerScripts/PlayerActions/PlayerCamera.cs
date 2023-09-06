@@ -16,11 +16,11 @@ namespace PlayerScripts.PlayerActions
 
         void Update()
         {
-            if (Input.GetAxisRaw("Mouse ScrollWheel") > 0 && _camera.orthographicSize < 10) {
-                _camera.orthographicSize += 1;
-            }
-            else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0 && _camera.orthographicSize > 1) {
+            if (Input.GetAxisRaw("Mouse ScrollWheel") > 0 && _camera.orthographicSize > 1) {
                 _camera.orthographicSize -= 1;
+            }
+            else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0 && _camera.orthographicSize < 10) {
+                _camera.orthographicSize += 1;
             }
         }
 

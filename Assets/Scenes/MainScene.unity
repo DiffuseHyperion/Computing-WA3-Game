@@ -4627,6 +4627,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   errorSoundClip: {fileID: 8300000, guid: 96f0a08ecb91cf843a50571f4447b0cb, type: 3}
   meowSoundClip: {fileID: 8300000, guid: a76a17bb41f343a4e9b30f6e107d7741, type: 3}
+  placedSoundClip: {fileID: 8300000, guid: 2cced94a19e84084da4d52a996c11956, type: 3}
+  pumpSoundClip: {fileID: 8300000, guid: ba766308150de594084cb4559f0c726d, type: 3}
+  mechPumpSoundClip: {fileID: 8300000, guid: fa65cd2abff143c4c9fb3a03f72b791b, type: 3}
+  refuelSoundClip: {fileID: 8300000, guid: 541708a3d4d1f404e8f30396c1f1693a, type: 3}
+  BrushSoundClip: {fileID: 8300000, guid: b6083db14677e6242b34af2b7c62571c, type: 3}
+  powerDownClip: {fileID: 8300000, guid: eb7291a3ff53b3046be6c24bade33fbd, type: 3}
+  powerUpClip: {fileID: 8300000, guid: b02803a600e42314b8b37a2f4936dbba, type: 3}
 --- !u!1 &766703359
 GameObject:
   m_ObjectHideFlags: 0

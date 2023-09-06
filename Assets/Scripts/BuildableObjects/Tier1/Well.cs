@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BuildableObjects.BaseMachineClasses;
+using PlayerScripts.PlayerActions;
 using UnityEngine;
 using UtilClasses;
 
@@ -81,6 +82,7 @@ namespace BuildableObjects.Tier1
             _cooldown = maxCooldown;
             _wellStage = 1;
             UpdateSprite();
+            GetPlayer().GetComponent<PlayerSoundManager>().PlayPumpSound();
         }
     }
 }
